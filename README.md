@@ -1,4 +1,4 @@
-# Arch Install Cheatsheet for UEFI systemd-boot and GNOME / i3
+# [wip] Arch Install Cheatsheet for UEFI systemd-boot and GNOME / i3
 
 # Download [wip]
 ```bash
@@ -85,7 +85,7 @@ echo Arun-Predator-Linux > /etc/hostname
 passwd
 
 ```
-## Localization
+### Localization
 
 ```bash
 # Uncomment en_CA.UTF-8 UTF-8
@@ -95,12 +95,35 @@ echo LANG=en_US.UTF-8 > /etc/locale.conf
 locale-gen
 ```
 
-# DONE
+
+## systemd
+
+
+
+
+
+
+# Reboot, unplug USB
 ```bash
 # exit chroot
 exit
 reboot
 ```
 
+## add user
+```bash
+useradd
+passwd
+#edit wheel file
+vim /
+```
 
+# Rank Mirrors
+```bash
+cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak
+rankmirrors -n 6 /etc/pacman.d/mirrorlist.bak > /etc/pacman.d/mirrorlist
+```
 
+```bash
+pacman -S networkmanager gnome i3 i3-gaps i3status network-manager-applet nvidia bbswitch
+```

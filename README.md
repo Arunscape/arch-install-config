@@ -116,7 +116,7 @@ title   Arch Linux
 linux   /vmlinuz-linux
 initrd  /intel-ucode.img
 initrd  /initramfs-linux.img
-options root=XXXXXXXXXXXXXXXXXXXX rw
+options root=PARTUUID=XXXXXXXXXXXXXXXXXXXX rw
 
 # do this where XXXXXXXXXXXXXX is
 :r !blkid -s PARTUUID -o value /dev/sda2

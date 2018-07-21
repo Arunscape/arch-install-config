@@ -65,7 +65,7 @@ vim /etc/pacman.d/mirrorlist
 ```
 ---
 ```bash
-pacstrap -i base base-devel vim git intel-ucode
+pacstrap -i /mnt base base-devel vim git intel-ucode
 genfstab -U /mnt >> /mnt/etc/fstab # so that linux auto mounts /root /boot /home
 ```
 

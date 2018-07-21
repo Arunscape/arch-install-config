@@ -61,11 +61,11 @@ mount /dev/sda4 /mnt/home
 # Pacstrap
 #### Optional - Edit the Mirrorlist
 ```bash
-nano /etc/pacman.d/mirrorlist
+vim /etc/pacman.d/mirrorlist
 ```
 ---
 ```bash
-pacstrap -i base base-devel vim git
+pacstrap -i base base-devel vim git intel-ucode
 genfstab -U /mnt >> /mnt/etc/fstab # so that linux auto mounts /root /boot /home
 ```
 
@@ -97,8 +97,30 @@ locale-gen
 
 
 ## systemd
+```bash
+bootctl install
+```
+```bash
+vim boot/loader/loader.conf
+# should look like this
 
+default arch
+timeout 1
+editor no
+auto-entries 0
+```
+```bash
+vim boot/loader/entries/arch.conf
+# should look like this
+title   Arch Linux
+linux   /vmlinuz-linux
+initrd  /intel-ucode.img
+initrd  /initramfs-linux.img
+options root=XXXXXXXXXXXXXXXXXXXX rw
 
+# do this where XXXXXXXXXXXXXX is
+:r !blkid -s PARTUUID -o value /dev/sda2
+```
 
 
 

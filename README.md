@@ -123,7 +123,13 @@ options root=XXXXXXXXXXXXXXXXXXXX rw
 ```
 
 
-
+## add user
+```bash
+useradd -m -g wheel username
+passwd username
+#edit wheel file
+visudo
+```
 
 # Reboot, unplug USB
 ```bash
@@ -132,12 +138,13 @@ exit
 reboot
 ```
 
-## add user
+# stuff i install
 ```bash
-useradd
-passwd
-#edit wheel file
-vim /
+sudo pacman -Syyu
+sudo pacman -S xorg-server xorg-xinit
+sudo pacman -S gnome
+sudo pacman -S i3
+sudo pacman -S nvidia bbswitch linux-headers
 ```
 
 # Rank Mirrors

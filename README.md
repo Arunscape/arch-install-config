@@ -156,3 +156,12 @@ rankmirrors -n 6 /etc/pacman.d/mirrorlist.bak > /etc/pacman.d/mirrorlist
 ```bash
 pacman -S networkmanager gnome i3 i3-gaps i3status network-manager-applet nvidia bbswitch
 ```
+
+## Backing up
+```bash
+dd if=/dev/sda status=progress | gzip -c > path/to/your-backup.img.gz
+```
+### Restoring
+gunzip -c /path/to/your-backup.img.gz | dd of=/dev/sda status=progress
+
+## Or, just use clonezilla

@@ -161,7 +161,7 @@ cd Downloads
 git clone https://aur.archlinux.org/yay.git
 cd yay
 makepkg -si
-sudo pacman -S networkmanager gnome i3 i3-gaps i3status network-manager-applet nvidia
+sudo pacman -S networkmanager gnome i3 i3-gaps i3status network-manager-applet rxvt-unicode nvidia
 yay -S firefox-developer-edition atom-beta
 ```
 

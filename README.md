@@ -153,8 +153,11 @@ cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak
 rankmirrors -n 6 /etc/pacman.d/mirrorlist.bak > /etc/pacman.d/mirrorlist
 ```
 
+
+
+# postinstall
 ```bash
-pacman -S networkmanager gnome i3 i3-gaps i3status network-manager-applet nvidia bbswitch
+pacman -S networkmanager gnome i3 i3-gaps i3status network-manager-applet nvidia
 ```
 
 ## Backing up

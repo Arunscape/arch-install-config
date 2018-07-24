@@ -165,6 +165,19 @@ sudo pacman -S networkmanager gnome i3 i3-gaps i3status network-manager-applet n
 yay -S firefox-developer-edition atom-beta
 ```
 
+# Gnome theming (i3 soon)
+https://github.com/adapta-project/adapta-gtk-theme
+https://github.com/PapirusDevelopmentTeam/papirus-icon-theme
+https://color.firefox.com/?theme=XQAAAALUAAAAAAAAAABBKYhm849SCiazH1KEGccwS-xNVAVNrWV6_89xtxNWy3sM0X99YG7itotZ8sB9kkK0owJCyKXJNAryj9IJU_wtu72r-X3skC4prCeW-fnJweq-4xu9tLmeXj8UkSdZGnzwrWVCNr3bToa6Zufrkj2b7e0PqstuOnN1gdAzjKSHwEJvdQThz-ruhge78cW2PaG0mCwQPvE72cX8OQiA
+https://extensions.gnome.org/extension/307/dash-to-dock/
+https://extensions.gnome.org/extension/1253/extended-gestures/   (wayland only)
+https://extensions.gnome.org/extension/427/workspaces-to-dock/
+
+```bash
+sudo pacman -S gnome-tweaks chrome-gnome-shell adapta-gtk-theme papirus-icon-theme
+ 
+```
+
 ## Backing up
 ```bash
 dd if=/dev/sda status=progress | gzip -c > path/to/your-backup.img.gz

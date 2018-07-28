@@ -183,6 +183,12 @@ sudo pacman -S gnome-tweaks chrome-gnome-shell adapta-gtk-theme papirus-icon-the
  
 ```
 
+# i3 stuff
+install this amazing font https://github.com/be5invis/Iosevka
+```bash
+yay -S ttf-iosevka
+```
+
 ## Backing up
 ```bash
 dd if=/dev/sda status=progress | gzip -c > path/to/your-backup.img.gz

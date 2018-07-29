@@ -185,8 +185,10 @@ sudo pacman -S gnome-tweaks chrome-gnome-shell adapta-gtk-theme papirus-icon-the
 
 # i3 stuff
 install this amazing font https://github.com/be5invis/Iosevka
+also install libinput gestures
 ```bash
-yay -S ttf-iosevka
+sudo pacman -S xf86-input-libinput
+yay -S ttf-iosevka libinput-gestures
 ```
 
 ## Backing up

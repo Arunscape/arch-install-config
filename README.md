@@ -1,8 +1,12 @@
 # [wip] Arch Install Cheatsheet for UEFI systemd-boot and GNOME / i3
 
-# Download [wip]
+# Download
+save this as a script and tun (make sure your dd command is correct)
 ```bash
-echo Downloading version: $(curl -s https://www.archlinux.org/download/ | grep "Current Release" | awk '{print $3}' | sed -e 's/<.*//')
+
+archiso_latest=$(curl -s https://www.archlinux.org/download/ | grep "Current Release" | awk '{print $3}' | sed -e 's/<.*//')
+
+echo Downloading version: $archiso_latest
 
 curl -L http://mirrors.kernel.org/archlinux/iso/$archiso_latest/archlinux-$archiso_latest-x86_64.iso
 dd bs=4M if=/path/to/archlinux.iso of=/dev/sdx status=progress oflag=sync

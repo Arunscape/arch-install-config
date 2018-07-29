@@ -2,9 +2,9 @@
 
 # Download [wip]
 ```bash
-export archiso_latest=$(curl -s https://www.archlinux.org/download/ | grep "Current Release" | awk '{print $3}' | sed -e 's/<.*//')
-export archiso_link=http://mirrors.kernel.org/archlinux/iso/$archiso_latest/archlinux-$archiso_latest-x86_64.iso
-wget "$archiso_link"
+echo Downloading version: $(curl -s https://www.archlinux.org/download/ | grep "Current Release" | awk '{print $3}' | sed -e 's/<.*//')
+
+curl -L http://mirrors.kernel.org/archlinux/iso/$archiso_latest/archlinux-$archiso_latest-x86_64.iso
 dd bs=4M if=/path/to/archlinux.iso of=/dev/sdx status=progress oflag=sync
 ```
 

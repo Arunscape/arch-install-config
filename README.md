@@ -1,15 +1,17 @@
 # [wip] Arch Install Cheatsheet for UEFI systemd-boot and GNOME / i3
 
 # Download
-save this as a script and run (make sure your dd command is correct)
+save this as a script and run (make sure you change sdX to the correct drive!!)
 ```bash
 
 archiso_latest=$(curl -s https://www.archlinux.org/download/ | grep "Current Release" | awk '{print $3}' | sed -e 's/<.*//')
 
 echo Downloading version: $archiso_latest
 
-curl -L http://mirrors.kernel.org/archlinux/iso/$archiso_latest/archlinux-$archiso_latest-x86_64.iso
-dd bs=4M if=/path/to/archlinux.iso of=/dev/sdx status=progress oflag=sync
+curl -L http://mirrors.kernel.org/archlinux/iso/$archiso_latest/archlinux-$archiso_latest-x86_64.iso > /dev/sdX
+
+#or, torrent the iso and
+#dd bs=4M if=/path/to/archlinux.iso of=/dev/sdX status=progress oflag=sync
 ```
 
 ### Connect to wifi

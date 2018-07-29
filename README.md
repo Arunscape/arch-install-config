@@ -1,7 +1,7 @@
 # [wip] Arch Install Cheatsheet for UEFI systemd-boot and GNOME / i3
 
 # Download
-save this as a script and tun (make sure your dd command is correct)
+save this as a script and run (make sure your dd command is correct)
 ```bash
 
 archiso_latest=$(curl -s https://www.archlinux.org/download/ | grep "Current Release" | awk '{print $3}' | sed -e 's/<.*//')

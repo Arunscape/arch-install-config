@@ -8,7 +8,9 @@ archiso_latest=$(curl -s https://www.archlinux.org/download/ | grep "Current Rel
 
 echo Downloading version: $archiso_latest
 
-curl -L http://mirrors.kernel.org/archlinux/iso/$archiso_latest/archlinux-$archiso_latest-x86_64.iso > /dev/sdX
+curl -L http://mirrors.kernel.org/archlinux/iso/$archiso_latest/archlinux-$archiso_latest-x86_64.iso | sudo dd bs=4M of=/dev/sdX status=progress oflag=sync
+#or if you're root
+#curl -L http://mirrors.kernel.org/archlinux/iso/$archiso_latest/archlinux-$archiso_latest-x86_64.iso > /dev/sdX
 
 #or, torrent the iso and
 #dd bs=4M if=/path/to/archlinux.iso of=/dev/sdX status=progress oflag=sync

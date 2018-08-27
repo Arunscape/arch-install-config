@@ -4,7 +4,7 @@
 
 DRIVE=''
 
-HOSTNAME=''
+HOST_NAME=''
 
 ROOT_PASSWD=''
 
@@ -12,6 +12,7 @@ USERNAME=''
 
 USER_PASSWD=''
 
+ex: Canada/Mountain
 TIMEZONE=''
 
 KEYMAP=''

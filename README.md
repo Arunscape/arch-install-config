@@ -1,5 +1,8 @@
 # [wip] Arch Install Cheatsheet for UEFI systemd-boot and GNOME / i3
 
+
+curl -L https://goo.gl/C4wxvT -o install.sh
+
 # Download
 save this as a script and run (make sure you change sdX to the correct drive!!)
 ```bash

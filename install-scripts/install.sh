@@ -152,8 +152,8 @@ format(){
 }
 
 
-pacstrap(){
-	pacman -Sy
+run_pacstrap(){
+	pacman -Syy
 	pacstrap -i /mnt base base-devel \
 	vim \
 	git \
@@ -296,7 +296,7 @@ finish(){
 
 setup
 format
-pacstrap
+run_pacstrap
 post_pacstrap
 copy_configs
 finish # apparently done is a reserved word

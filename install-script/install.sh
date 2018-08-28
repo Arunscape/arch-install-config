@@ -17,45 +17,62 @@ setup(){
 	
 	if [ -z "$DRIVE" ]
         then
-       	   echo 'Enter the root password:'
+       	   echo 'Enter the drive to install Arch to:'
            read DRIVE
         fi
+	echo Installing Arch to: $DRIVE
 
 	if [ -z "$HOST_NAME" ]
         then
-       	   echo 'Enter the root password:'
+       	   echo 'Enter your desired hostname:'
            read HOST_NAME
         fi
+	echo Hostname: $HOST_NAME
 
-	if [ -z "$ROOT_PASSWD" ]
-        then
-       	   echo 'Enter the root password:'
-           read ROOT_PASSWORD
-        fi
+	#if [ -z "$ROOT_PASSWD" ]
+        #then
+       	#   echo 'Enter the root password:'
+        #   read ROOT_PASSWORD
+        #fi
 
 	if [ -z "$USERNAME" ]
         then
-       	   echo 'Enter the root password:'
+       	   echo 'Enter your username:'
            read USERNAME
         fi
+	echo Username: $USERNAME
 
 	if [ -z "$USER_PASSWD" ]
         then
-       	   echo 'Enter the root password:'
+       	   echo 'Enter your password:'
            read USER_PASSWORD
         fi
+	while true
+	do
+		echo "Confirm your password: "
+		read passwdconfirmation
+		
+		if [ $USER_PASSWORD == $passwdconfirmation]
+        	then
+       	   		echo Cool
+			break
+           	
+		else
+			echo That wasn\'t correct, try again, or press Ctrl+C to exit the script, change your password, and re-run this script
+		fi
+	done
 
 	if [ -z "$TIMEZONE" ]
         then
-       	   echo 'Enter the root password:'
+       	   echo 'Enter your timezone'
            read TIMEZONE
         fi
 
-	if [ -z "$KEYMAP" ]
-        then
-       	   echo 'Enter the root password:'
-           read KEYMAP
-        fi
+	#if [ -z "$KEYMAP" ]
+        #then
+       	#   echo 'Enter your keymap'
+        #   read KEYMAP
+        #fi
 }
 
 format(){
@@ -82,9 +99,9 @@ format(){
 	echo       #
 	echo +24G  #
 	echo n     # /home parition, fill rest of disk
-        echo       #
 	echo       #
-        echo       #
+	echo       #
+	echo       #
 	echo p     # show what's going to be done
 	echo w     # write changes
 	echo q     # quit fdisk	
@@ -100,7 +117,7 @@ format(){
 	mkfs.fat $bootpart  # /boot
 	mkfs.ext4 $rootpart # /
 	mkswap $swappart    # SWAP
-	swapon $sqappart    #
+	swapon $swappart    #
 	mkfs.ext4 $homepart # /home
 
 	#mount the partitions
@@ -121,13 +138,38 @@ format(){
 
 pacstrap(){
 	pacman -Syyu
-	pacstrap -i /mnt base base-devel vim git intel-ucode pacman-contrib
-	
-	genfstab -U /mnt >> /mnt/etc/fstab # so that linux auto mounts /root /boot /home
+	pacstrap -i /mnt base base-devel \
+	vim \
+	git \
+	intel-ucode \
+	pacman-contrib \ # for rankmirrors script
+	xorg-server \
+	xorg-xinit \
+	nvidia \
+	bbswitch \
+	linux-headers \
+	xf86-input-libinput \
+	networkmanager \
+	network-manager-applet \
+	i3-gaps \
+	i3status \
+	rxvt-unicode
 
+	git clone https://aur.archlinux.org/yay.git
+	cd yay
+	makepkg -si
+	cd ..
+	rm -rf yay
+
+	yay -S firefox-developer-edition \
+	ttf-iosevka \     # cool font
+	libinput-gestures # touchpad gestures
 }
 
 post_pacstrap(){
+	
+	# so that linux auto mounts /root /boot /home
+	genfstab -U /mnt >> /mnt/etc/fstab 
 	arch-chroot /mnt
 
 	# Timezone
@@ -140,17 +182,17 @@ post_pacstrap(){
 	echo $HOST_NAME > /etc/hostname
 
 	# Set root passwwd
-	(
-	echo $ROOT_PASSWD
-	echo $ROOT_PASSWD
-	) | passwd
+	#(
+	#echo $ROOT_PASSWD
+	#echo $ROOT_PASSWD
+	#) | passwd
 
 	# Localization
 	echo Uncommenting these lines in /etc/locale.gen:
 	cat /etc/locale.gen | grep en_CA
 	sed -i '/en_CA/ s/^#//' /etc/locale.gen
 
-	echo LANG=en_US.UTF-8 > /etc/locale.conf
+	echo LANG=en_CA.UTF-8 > /etc/locale.conf
 	
 	echo Generating locale...
 	locale-gen
@@ -164,7 +206,7 @@ editor no
 auto-entries 0
 EOF
 
-	diskuuid=$(blkid -s PARTUUID -o value /dev/sda2)
+	diskuuid=$(blkid -s PARTUUID -o value "$DRIVE"2)
 	cat > boot/loader/entries/arch.conf << EOF
 title   Arch Linux
 linux   /vmlinuz-linux
@@ -186,14 +228,54 @@ EOF
 	echo Here\'s what got uncommented:
 	cat /etc/sudoers | grep wheel
 
-	# rank mirrors
+	# Disable root account
+	usermod -p '!' root
+
+# rank mirrors
 	echo Ranking mirrors.. This will take a while
 	cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bakup
 	curl https://www.archlinux.org/mirrorlist/all/https/ | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -n 6 - > /etc/pacman.d/mirrorlist
 
+
+}
+
+copy_configs(){
+	
+	echo Copying configs...
+	
+	local HOMEDIR = /home/$USERNAME
+	
+	# i3 config
+	curl -Lo $HOMEDIR/.config/i3/config --create-dirs https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.config/i3/config
+
+	# libinput gestures
+	curl -Lo $HOMEDIR/.config/libinput-gestures.conf --create-dirs https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.config/libinput-gestures.conf
+
+	# .Xresources
+	curl -Lo $HOMEDIR/.Xresources --create-dirs https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.Xresources
+	
+	# .vimrc
+	curl -Lo $HOMEDIR/.vimrc --create-dirs https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.vimrc
+	
+	# vim-plug
+	# just realized I have a ection in .vimrc which sets this up if it's missing
+	#curl -Lo $HOMEDIR/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
+	# .xinitrc
+	curl -Lo $HOMEDIR/.xinitrc --create-dirs https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.xinitrc
+
+}
+
+finish(){
+	# exit and reboot
+	exit
+	echo "$(tput bold)$(tput setaf 2)Done!!!$(tput sgr 0)"
+	reboot
 }
 
 setup
 format
 pacstrap
 post_pacstrap
+copy_configs
+finish # apparently done is a reserved word

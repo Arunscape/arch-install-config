@@ -7,7 +7,7 @@ cp ~/.config/i3/config ~/Downloads/arch-install-config/configs/home/.config/i3/c
 cp ~/.xinitrc ~/Downloads/arch-install-config/configs/home/.xinitrc
 
 # xresources
-cp ~/.Xresources ~/Downloads/arch-install-config/configs/home/,Xresources
+cp ~/.Xresources ~/Downloads/arch-install-config/configs/home/.Xresources
 
 # vim
 cp ~/.vimrc ~/Downloads/arch-install-config/configs/home/.vimrc

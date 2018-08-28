@@ -280,9 +280,10 @@ copy_configs(){
 	# just realized I have a section in .vimrc which sets this up if it's missing
 	#curl -Lo $HOMEDIR/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 	
-	echo Installing vim plugins...
-	vim +PlugInstall +qall
-
+	# doesn't work as nicely, should also be run as user postinstall I think
+	# echo Installing vim plugins...
+	# vim +PlugInstall +qall
+	
 	# .xinitrc
 	curl -Lo $HOMEDIR/.xinitrc --create-dirs https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.xinitrc
 

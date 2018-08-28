@@ -91,7 +91,7 @@ setup(){
 format(){
 	read -p "$(tput bold)$(tput setaf 1)WARNING this will wipe $DRIVE Press ENTER to continue, or Ctrl+C to exit$(tput sgr 0)"
 	
-	wipefs -a $DRIVE
+	wipefs -af $DRIVE
 
 	
 	# use fdisk to partition drives
@@ -135,6 +135,7 @@ format(){
 
 	#mount the partitions
 	mount $rootpart /mnt
+	mkdir /mnt/boot
 	mkdir /mnt/home
 	mount $bootpart /mnt/boot
 	mount $homepart /mnt/home

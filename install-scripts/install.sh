@@ -1,15 +1,28 @@
-# reminder of variables
-#DRIVE
-#HOST_NAME
-#ROOT_PASSWD
-#USERNAME
-USER_PASSWD
-#TIMEZONE='Canada/Mountain'
-#KEYMAP
+# variables
+# Edit these variables or leave them blank to be prompted during setup
 
+# install arch to this drive ex: /dev/sda or /dev/sdb... etc
+DRIVE=''
 
-# load variables
-. variables
+#
+HOST_NAME=''
+
+# not required, root account is now disabled in install script
+# ROOT_PASSWD=''
+
+# has to be all lowercase
+USERNAME=''
+
+# maybe not the best idea to store your password in plain text but the option is there if you want
+USER_PASSWD=''
+
+# examples:
+# America/New_York
+# Canada/Mountain
+TIMEZONE=''
+
+# right now, I default to Canadian English locales
+# KEYMAP=''
 
 setup(){
 	# connect to wifi
@@ -126,13 +139,15 @@ format(){
 	mount $bootpart /mnt/boot
 	mount $homepart /mnt/home
 
-	echo "Do you want to edit the mirrorlist? y/n"
-	read editmirrorlist
-	if [[ "$choice" == [Yy]* ]]
-	then
-		vim /etc/pacman.d/mirrorlist
-	fi
-
+	#echo "Do you want to edit the mirrorlist? y/n"
+	#read editmirrorlist
+	#if [[ "$choice" == [Yy]* ]]
+	#then
+	#	vim /etc/pacman.d/mirrorlist
+	#fi
+	
+	# this mirror works fast enough for me
+	echo 'Server = https://mirrors.kernel.org/archlinux/$repo/os/$arch' > /etc/pacman.d/mirrorlist
 }
 
 
@@ -170,6 +185,8 @@ post_pacstrap(){
 	
 	# so that linux auto mounts /root /boot /home
 	genfstab -U /mnt >> /mnt/etc/fstab 
+	
+	# post install config
 	arch-chroot /mnt
 
 	# Timezone
@@ -231,7 +248,7 @@ EOF
 	# Disable root account
 	usermod -p '!' root
 
-# rank mirrors
+	# rank mirrors
 	echo Ranking mirrors.. This will take a while
 	cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bakup
 	curl https://www.archlinux.org/mirrorlist/all/https/ | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -n 6 - > /etc/pacman.d/mirrorlist
@@ -258,8 +275,11 @@ copy_configs(){
 	curl -Lo $HOMEDIR/.vimrc --create-dirs https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.vimrc
 	
 	# vim-plug
-	# just realized I have a ection in .vimrc which sets this up if it's missing
+	# just realized I have a section in .vimrc which sets this up if it's missing
 	#curl -Lo $HOMEDIR/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+	
+	echo Installing vim plugins...
+	vim +PlugInstall +qall
 
 	# .xinitrc
 	curl -Lo $HOMEDIR/.xinitrc --create-dirs https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.xinitrc

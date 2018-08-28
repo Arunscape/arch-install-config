@@ -158,7 +158,7 @@ run_pacstrap(){
 	vim \
 	git \
 	intel-ucode \
-	pacman-contrib \ # for rankmirrors script
+	pacman-contrib \
 	xorg-server \
 	xorg-xinit \
 	nvidia \
@@ -291,8 +291,8 @@ copy_configs(){
 
 finish(){
 	# exit and reboot
-	exit
 	echo "$(tput bold)$(tput setaf 2)Done!!!$(tput sgr 0)"
+	exit
 	reboot
 }
 

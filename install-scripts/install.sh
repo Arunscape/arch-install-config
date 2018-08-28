@@ -65,7 +65,7 @@ setup(){
 		echo "Confirm your password: "
 		read passwdconfirmation
 		
-		if [ $USER_PASSWORD == $passwdconfirmation]
+		if [ $USER_PASSWORD == $passwdconfirmation ]
         	then
        	   		echo Cool
 			break

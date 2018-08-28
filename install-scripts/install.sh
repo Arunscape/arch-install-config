@@ -152,7 +152,7 @@ format(){
 
 
 pacstrap(){
-	pacman -Syyu
+	pacman -Syy
 	pacstrap -i /mnt base base-devel \
 	vim \
 	git \

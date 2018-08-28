@@ -171,15 +171,16 @@ run_pacstrap(){
 	i3status \
 	rxvt-unicode
 
-	git clone https://aur.archlinux.org/yay.git
-	cd yay
-	makepkg -si
-	cd ..
-	rm -rf yay
+	#this should be done post install logged in as user
+	#git clone https://aur.archlinux.org/yay.git
+	#cd yay
+	#makepkg -si
+	#cd ..
+	#rm -rf yay
 
-	yay -S firefox-developer-edition \
-	ttf-iosevka \     # cool font
-	libinput-gestures # touchpad gestures
+	#yay -S firefox-developer-edition \
+	#ttf-iosevka \     # cool font
+	#libinput-gestures # touchpad gestures
 }
 
 post_pacstrap(){

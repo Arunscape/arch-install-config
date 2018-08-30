@@ -91,6 +91,7 @@ setup(){
 format(){
 	read -p "$(tput bold)$(tput setaf 1)WARNING this will wipe $DRIVE Press ENTER to continue, or Ctrl+C to exit$(tput sgr 0)"
 	
+	wipefs -af $DRIVE'[1234]'
 	wipefs -af $DRIVE
 
 	
@@ -189,7 +190,7 @@ chroot_step(){
 	# so that linux auto mounts /root /boot /home
 	genfstab -U /mnt >> /mnt/etc/fstab 
 	curl -Lo /mnt/install.sh https://raw.githubusercontent.com/Arunscape/arch-install-config/master/install-scripts/02-chroot.sh
-	arch-chroot /mnt bash ./install.sh $USERNAME $USER_PASSWD $HOSTNAME $TIMEZONE
+	arch-chroot /mnt ./install.sh $USERNAME $USER_PASSWD $HOSTNAME $TIMEZONE
 }
 
 setup

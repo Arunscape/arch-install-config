@@ -28,13 +28,15 @@ chroot_step(){
 	sed -i '/en_CA/ s/^#//' /etc/locale.gen
 
 	echo LANG=en_CA.UTF-8 > /etc/locale.conf
-	
+
 	echo Generating locale...
 	locale-gen
-	
+
+	# making directories if necessary
+	mkdir -p boot/loader/entries/
+
 	# systemd
 	echo Setting up systemd...
-	mkdir -p boot/loader.loader.conf
 	cat > boot/loader/loader.conf << EOF
 default arch
 timeout 1
@@ -43,7 +45,6 @@ auto-entries 0
 EOF
 
 	diskuuid=$(blkid -s PARTUUID -o value "$DRIVE"2)
-	mkdir -p boot/loader/entries/arch.conf
 	cat > boot/loader/entries/arch.conf << EOF
 title   Arch Linux
 linux   /vmlinuz-linux
@@ -77,11 +78,11 @@ EOF
 }
 
 copy_configs(){
-	
+
 	echo Copying configs...
-	
+
 	local HOMEDIR = /home/$USERNAME
-	
+
 	# i3 config
 	curl -Lo $HOMEDIR/.config/i3/config --create-dirs https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.config/i3/config
 
@@ -90,18 +91,18 @@ copy_configs(){
 
 	# .Xresources
 	curl -Lo $HOMEDIR/.Xresources --create-dirs https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.Xresources
-	
+
 	# .vimrc
 	curl -Lo $HOMEDIR/.vimrc --create-dirs https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.vimrc
-	
+
 	# vim-plug
 	# just realized I have a section in .vimrc which sets this up if it's missing
 	#curl -Lo $HOMEDIR/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-	
+
 	# doesn't work as nicely, should also be run as user postinstall I think
 	# echo Installing vim plugins...
 	# vim +PlugInstall +qall
-	
+
 	# .xinitrc
 	curl -Lo $HOMEDIR/.xinitrc --create-dirs https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.xinitrc
 

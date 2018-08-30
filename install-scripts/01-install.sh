@@ -91,15 +91,11 @@ setup(){
 format(){
 	read -p "$(tput bold)$(tput setaf 1)WARNING this will wipe $DRIVE Press ENTER to continue, or Ctrl+C to exit$(tput sgr 0)"
 	
-	wipefs -af $DRIVE
-
+	# wipefs -af $DRIVE
+	blkdiscard $DRIVE
 	
 	# use fdisk to partition drives
 	(
-	echo d
-	echo d
-	echo d
-	echo d
 	echo g     # create GPT partition table
 	echo n     # create /boot partision
 	echo       # accept default partition number 1

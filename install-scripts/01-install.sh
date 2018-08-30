@@ -208,7 +208,7 @@ chroot_step(){
 
 finish(){
 	# exit and reboot
-	rm mnt/install.sh
+	rm /mnt/install.sh
 	umount -R /mnt
 	echo "$(tput bold)$(tput setaf 2)Done!!!$(tput sgr 0)"
 	reboot

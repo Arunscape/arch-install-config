@@ -206,7 +206,16 @@ chroot_step(){
 	arch-chroot /mnt bash install.sh $USERNAME $USER_PASSWD $HOSTNAME $TIMEZONE
 }
 
+finish(){
+	# exit and reboot
+	rm mnt/install.sh
+	umount -R /mnt
+	echo "$(tput bold)$(tput setaf 2)Done!!!$(tput sgr 0)"
+	reboot
+}
+
 setup
 format
 run_pacstrap
 chroot_step
+finish

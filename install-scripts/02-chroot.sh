@@ -108,14 +108,6 @@ copy_configs(){
 
 }
 
-finish(){
-	# exit and reboot
-	rm install.sh
-	echo "$(tput bold)$(tput setaf 2)Done!!!$(tput sgr 0)"
-	exit
-	reboot
-}
-
 postinstall(){
 	echo TODO
 }
@@ -123,4 +115,4 @@ postinstall(){
 
 chroot_step
 copy_configs
-finish
+exit

@@ -1,34 +1,11 @@
-# variables
-# Edit these variables or leave them blank to be prompted during setup
 
-# install arch to this drive ex: /dev/sda or /dev/sdb... etc
-DRIVE=''
-
-#
-HOST_NAME=''
-
-# not required, root account is now disabled in install script
-# ROOT_PASSWD=''
-
-# has to be all lowercase
-USERNAME=''
-
-# maybe not the best idea to store your password in plain text but the option is there if you want
-USER_PASSWD=''
-
-# examples:
-# America/New_York
-# Canada/Mountain
-TIMEZONE=''
-
-# right now, I default to Canadian English locales
-# KEYMAP=''
-
+#variables passed in
+USERNAME=$1
+USER_PASSWD=$2
+HOSTNAME=$3
+TIMEZONE=$4
 
 chroot_step(){
-
-	# post install config
-	arch-chroot /mnt ./install.sh post_pacstrap
 
 	# Timezone
 	ln -sf /usr/share/zoneinfo/$TIMEZONE /etc/localtime
@@ -136,17 +113,11 @@ finish(){
 	reboot
 }
 
-postinstall(){}
+postinstall(){
+	echo TODO
+}
 
 
-if [ "$1" == "post_pacstrap" ]
-then
-	dochroot
-	copy_configs
-	finish
-	
-else
-	setup
-	format
-	run_pacstrap
-fi
+chroot_step
+copy_configs
+finish

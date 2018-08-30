@@ -44,7 +44,8 @@ editor no
 auto-entries 0
 EOF
 
-	diskuuid=$(blkid -s PARTUUID -o value "$DRIVE"2)
+	local rootpart = "$DRIVE"2
+	diskuuid=$(blkid -s PARTUUID -o value $rootpart)
 	cat > boot/loader/entries/arch.conf << EOF
 title   Arch Linux
 linux   /vmlinuz-linux

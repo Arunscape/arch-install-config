@@ -166,11 +166,11 @@ format(){
 
 run_pacstrap(){
 	pacman -Syy
-	pacstrap -i /mnt base base-devel \
+	pacstrap /mnt base base-devel \
 	# vim \
 	# git \
 	# intel-ucode \
-	# pacman-contrib \
+	pacman-contrib \
 	# xorg-server \
 	# xorg-xinit \
 	# nvidia \

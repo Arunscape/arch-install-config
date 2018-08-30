@@ -34,6 +34,7 @@ chroot_step(){
 	
 	# systemd
 	echo Setting up systemd...
+	mkdir -p boot/loader.loader.conf
 	cat > boot/loader/loader.conf << EOF
 default arch
 timeout 1
@@ -42,6 +43,7 @@ auto-entries 0
 EOF
 
 	diskuuid=$(blkid -s PARTUUID -o value "$DRIVE"2)
+	mkdir -p boot/loader/entries/arch.conf
 	cat > boot/loader/entries/arch.conf << EOF
 title   Arch Linux
 linux   /vmlinuz-linux

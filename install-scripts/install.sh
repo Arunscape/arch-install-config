@@ -181,15 +181,18 @@ run_pacstrap(){
 	#yay -S firefox-developer-edition \
 	#ttf-iosevka \     # cool font
 	#libinput-gestures # touchpad gestures
-}
 
-post_pacstrap(){
-	
 	# so that linux auto mounts /root /boot /home
 	genfstab -U /mnt >> /mnt/etc/fstab 
 	
+}
+
+dochroot(){
+	
+	#copy this script
+	cp $0 /mnt/install.sh
 	# post install config
-	arch-chroot /mnt
+	arch-chroot /mnt ./install.sh post_pacstrap
 
 	# Timezone
 	ln -sf /usr/share/zoneinfo/$TIMEZONE /etc/localtime
@@ -291,14 +294,23 @@ copy_configs(){
 
 finish(){
 	# exit and reboot
+	rm install.sh
 	echo "$(tput bold)$(tput setaf 2)Done!!!$(tput sgr 0)"
 	exit
 	reboot
 }
 
-setup
-format
-run_pacstrap
-post_pacstrap
-copy_configs
-finish # apparently done is a reserved word
+postinstall(){}
+
+
+if [ "$1" == "post_pacstrap" ]
+then
+	dochroot
+	copy_configs
+	finish
+	
+else
+	setup
+	format
+	run_pacstrap
+fi

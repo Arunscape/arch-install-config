@@ -188,8 +188,8 @@ chroot_step(){
 	
 	# so that linux auto mounts /root /boot /home
 	genfstab -U /mnt >> /mnt/etc/fstab 
-	
-	arch-chroot /mnt curl -s https://raw.githubusercontent.com/Arunscape/arch-install-config/master/install-scripts/02-chroot.sh | bash -s $USERNAME $USER_PASSWD $HOSTNAME $TIMEZONE
+	curl -Lo /mnt/install.sh https://raw.githubusercontent.com/Arunscape/arch-install-config/master/install-scripts/02-chroot.sh
+	arch-chroot /mnt bash ./install.sh $USERNAME $USER_PASSWD $HOSTNAME $TIMEZONE
 }
 
 setup

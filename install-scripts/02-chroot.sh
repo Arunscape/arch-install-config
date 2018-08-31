@@ -119,6 +119,7 @@ install_stuff(){
 		rxvt-unicode \
 		texlive-most \
 		vlc
+		#oh I might have forgotten pulseaudio
 
 		systemctl enable NetworkManager
 

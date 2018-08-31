@@ -4,24 +4,24 @@
 #TEMPORARY REMEMBER TO CHANGE THIS
 
 # install arch to this drive ex: /dev/sda or /dev/sdb... etc
-DRIVE='/dev/sda'
+DRIVE=''
 
 #
-HOST_NAME='testvm'
+HOST_NAME=''
 
 # not required, root account is now disabled in install script
 # ROOT_PASSWD=''
 
 # has to be all lowercase
-USERNAME='testuser'
+USERNAME=''
 
 # maybe not the best idea to store your password in plain text but the option is there if you want
-USER_PASSWD='vm'
+USER_PASSWD=''
 
 # examples:
 # America/New_York
 # Canada/Mountain
-TIMEZONE='America/New_York'
+TIMEZONE=''
 
 # Partition sizes
 BOOTSIZE=100M
@@ -73,7 +73,7 @@ setup(){
 		echo "Confirm your password: "
 		read passwdconfirmation
 
-		if [ $USER_PASSWD == $passwdconfirmation ]
+		if [ "$USER_PASSWD" == "$passwdconfirmation" ]
         	then
        	   		echo Cool
 			break

@@ -95,14 +95,14 @@ EOF
 install_stuff(){
 
 	# rank mirrors
-	sudo -u $USERNAME pacman -S --noconfirm pacman-contrib
+	pacman -S --noconfirm pacman-contrib
 	echo 'Ranking mirrors.. This will take a while...'
 	cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bakup
 	curl https://www.archlinux.org/mirrorlist/all/https/ | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -n 6 - > /etc/pacman.d/mirrorlist
 
 	# install things
 	echo Installing stuff...
-		sudo -u $USERNAME pacman -S --noconfirm \
+		pacman -S --noconfirm \
 		vim \
 		git \
 		intel-ucode \
@@ -117,7 +117,7 @@ install_stuff(){
 		i3-gaps \
 		i3status \
 		rxvt-unicode \
-		texlive-most \
+		# texlive-most \ # too big, install later when needed
 		vlc
 		#oh I might have forgotten pulseaudio
 

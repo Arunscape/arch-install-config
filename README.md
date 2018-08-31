@@ -1,4 +1,4 @@
-# [wip] Arch Install Cheatsheet for UEFI systemd-boot and GNOME / i3
+# [super early beta probably works but idk] Arch Install Cheatsheet for UEFI systemd-boot and GNOME / i3
 
 
 curl -L https://goo.gl/C4wxvT -o install.sh

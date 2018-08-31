@@ -66,7 +66,7 @@ setup(){
 	if [ -z "$USER_PASSWD" ]
         then
        	   echo 'Enter your password:'
-           read USER_PASSWORD
+           read USER_PASSWD
         fi
 	while true
 	do

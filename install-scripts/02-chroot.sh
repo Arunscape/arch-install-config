@@ -95,7 +95,7 @@ EOF
 install_stuff(){
 
 	# rank mirrors
-	pacman -S --noconfirm pacman-contrib
+	sudo -u testuser pacman -S --noconfirm pacman-contrib
 	echo 'Ranking mirrors.. This will take a while...'
 	cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bakup
 	curl https://www.archlinux.org/mirrorlist/all/https/ | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -n 6 - > /etc/pacman.d/mirrorlist

@@ -56,6 +56,19 @@ initrd  /initramfs-linux.img
 options root=PARTUUID=$diskuuid rw
 EOF
 
+# hook to run bootctl update whenever systemd is updated
+	cat > /etc/pacman.d/hooks/systemd-boot.hook << EOF
+[Trigger]
+Type = Package
+Operation = Upgrade
+Target = systemd
+
+[Action]
+Description = Updating systemd-boot
+When = PostTransaction
+Exec = /usr/bin/bootctl update
+EOF
+
 	# add user
 	echo Creating user $USERNAME
 	useradd -m -g wheel $USERNAME

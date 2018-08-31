@@ -5,7 +5,7 @@ USER_PASSWD=$2
 HOSTNAME=$3
 TIMEZONE=$4
 
-chroot_step(){
+setup(){
 
 	# Timezone
 	ln -sf /usr/share/zoneinfo/$TIMEZONE /etc/localtime
@@ -36,7 +36,9 @@ chroot_step(){
 	mkdir -p boot/loader/entries/
 
 	# systemd
-	echo Setting up systemd...
+	echo Setting up systemd-boot...
+	bootctl install
+
 	cat > boot/loader/loader.conf << EOF
 default arch
 timeout 1
@@ -70,12 +72,53 @@ EOF
 	# Disable root account
 	usermod -p '!' root
 
+	# makes pacman and yay colourful
+	sed -i "s/#Color^/Color/g" /etc/pacman.conf
+
+}
+
+install_stuff(){
+
 	# rank mirrors
-	echo Ranking mirrors.. This will take a while
+	pacman -S --noconfirm pacman-contrib
+	echo 'Ranking mirrors.. This will take a while...'
 	cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bakup
 	curl https://www.archlinux.org/mirrorlist/all/https/ | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -n 6 - > /etc/pacman.d/mirrorlist
 
+	# install things
+	echo Installing stuff...
+		pacman -S --noconfirm \
+		vim \
+		git \
+		intel-ucode \
+		xorg-server \
+		xorg-xinit \
+		nvidia \
+		bbswitch \
+		linux-headers \
+		xf86-input-libinput \
+		networkmanager \
+		network-manager-applet \
+		i3-gaps \
+		i3status \
+		rxvt-unicode \
+		texlive-most \
+		vlc
 
+		systemctl enable NetworkManager
+
+		echo Installing yay...
+		git clone https://aur.archlinux.org/yay.git
+		cd yay
+		sudo -u $USERNAME makepkg --noconfirm -si
+		cd ..
+		rm -rf yay
+
+		echo Installing stuff from AUR...
+		sudo -u $USERNAME yay -S --noconfirm \
+		firefox-developer-edition \
+		ttf-iosevka \     # cool font
+		libinput-gestures # touchpad gestures
 }
 
 copy_configs(){
@@ -114,6 +157,7 @@ postinstall(){
 }
 
 
-chroot_step
+setup
+install_stuff
 copy_configs
 exit

@@ -166,35 +166,7 @@ format(){
 
 run_pacstrap(){
 	pacman -Syy
-	pacstrap /mnt base base-devel \
-	# vim \
-	# git \
-	# intel-ucode \
-	pacman-contrib \
-	# xorg-server \
-	# xorg-xinit \
-	# nvidia \
-	# bbswitch \
-	# linux-headers \
-	# xf86-input-libinput \
-	# networkmanager \
-	# network-manager-applet \
-	# i3-gaps \
-	# i3status \
-	# rxvt-unicode
-	# TEMP I do want these packages installed but it slows testing
-
-	#this should be done post install logged in as user
-	#git clone https://aur.archlinux.org/yay.git
-	#cd yay
-	#makepkg -si
-	#cd ..
-	#rm -rf yay
-
-	#yay -S firefox-developer-edition \
-	#ttf-iosevka \     # cool font
-	#libinput-gestures # touchpad gestures
-
+	pacstrap /mnt base base-devel
 }
 
 chroot_step(){

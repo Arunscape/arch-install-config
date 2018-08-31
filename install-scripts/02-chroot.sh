@@ -126,12 +126,12 @@ install_stuff(){
 		git clone https://aur.archlinux.org/yay.git
 		chmod 777 -R yay
 		cd yay
-		sudo -u $USERNAME makepkg --noconfirm -si
+		echo $USER_PASSWD | sudo -u $USERNAME makepkg --noconfirm -si
 		cd ..
 		rm -rf yay
 
 		echo Installing stuff from AUR...
-		sudo -u $USERNAME yay -S --noconfirm \
+		echo $USER_PASSWD sudo -u $USERNAME yay -S --noconfirm \
 		firefox-developer-edition \
 		ttf-iosevka \     # cool font
 		libinput-gestures # touchpad gestures

@@ -37,7 +37,6 @@ setup(){
 
 	# systemd
 	echo Setting up systemd-boot...
-	bootctl install
 
 	cat > boot/loader/loader.conf << EOF
 default arch
@@ -56,7 +55,10 @@ initrd  /initramfs-linux.img
 options root=PARTUUID=$diskuuid rw
 EOF
 
+	bootctl install
+	
 # hook to run bootctl update whenever systemd is updated
+	mkdir -p /etc/pacman.d/hooks
 	cat > /etc/pacman.d/hooks/systemd-boot.hook << EOF
 [Trigger]
 Type = Package

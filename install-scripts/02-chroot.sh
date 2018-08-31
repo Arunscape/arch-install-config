@@ -56,7 +56,7 @@ options root=PARTUUID=$diskuuid rw
 EOF
 
 	bootctl install
-	
+
 # hook to run bootctl update whenever systemd is updated
 	mkdir -p /etc/pacman.d/hooks
 	cat > /etc/pacman.d/hooks/systemd-boot.hook << EOF
@@ -124,6 +124,7 @@ install_stuff(){
 
 		echo Installing yay...
 		git clone https://aur.archlinux.org/yay.git
+		chmod 777 -R yay
 		cd yay
 		sudo -u $USERNAME makepkg --noconfirm -si
 		cd ..

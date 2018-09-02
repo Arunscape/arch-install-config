@@ -2,7 +2,7 @@
 #variables passed in
 USERNAME=$1
 USER_PASSWD=$2
-HOSTNAME=$3
+HOST_NAME=$3
 TIMEZONE=$4
 DRIVE=$5
 
@@ -144,7 +144,10 @@ copy_configs(){
 	echo Copying configs...
 
 	local HOMEDIR = /home/$USERNAME
-
+	
+	# make directories as necessary
+	mkdir -p $HOMEDIR/.config/i3
+	
 	# i3 config
 	curl -Lo $HOMEDIR/.config/i3/config --create-dirs https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.config/i3/config
 

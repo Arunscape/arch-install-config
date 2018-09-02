@@ -175,7 +175,7 @@ chroot_step(){
 	genfstab -U /mnt >> /mnt/etc/fstab
 	curl -Lo /mnt/install.sh https://raw.githubusercontent.com/Arunscape/arch-install-config/master/install-scripts/02-chroot.sh
 	chmod +x /mnt/install.sh
-	arch-chroot /mnt bash install.sh $USERNAME $USER_PASSWD $HOSTNAME $TIMEZONE
+	arch-chroot /mnt bash install.sh $USERNAME $USER_PASSWD $HOSTNAME $TIMEZONE $DRIVE
 }
 
 finish(){

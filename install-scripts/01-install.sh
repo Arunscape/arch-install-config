@@ -1,8 +1,6 @@
 # variables
 # Edit these variables or leave them blank to be prompted during setup
 
-#TEMPORARY REMEMBER TO CHANGE THIS
-
 # install arch to this drive ex: /dev/sda or /dev/sdb... etc
 DRIVE=''
 
@@ -33,8 +31,6 @@ SWAPSIZE=24G
 # KEYMAP=''
 
 setup(){
-	# connect to wifi
-	wifi-menu
 
 	if [ -z "$DRIVE" ]
         then
@@ -88,6 +84,7 @@ setup(){
        	   echo 'Enter your timezone'
            read TIMEZONE
         fi
+	echo Timezone: $TIMEZONE
 
 	#if [ -z "$KEYMAP" ]
         #then
@@ -175,7 +172,7 @@ chroot_step(){
 	genfstab -U /mnt >> /mnt/etc/fstab
 	curl -Lo /mnt/install.sh https://raw.githubusercontent.com/Arunscape/arch-install-config/master/install-scripts/02-chroot.sh
 	chmod +x /mnt/install.sh
-	arch-chroot /mnt bash install.sh $USERNAME $USER_PASSWD $HOSTNAME $TIMEZONE $DRIVE
+	arch-chroot /mnt bash install.sh $USERNAME $USER_PASSWD $HOST_NAME $TIMEZONE $DRIVE
 }
 
 finish(){

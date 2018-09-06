@@ -118,8 +118,8 @@ install_stuff(){
 		i3-gaps \
 		i3status \
 		rxvt-unicode \
-		# texlive-most \ # too big, install later when needed
 		vlc
+		# texlive-most \ # too big, install later when needed
 		#oh I might have forgotten pulseaudio
 
 		systemctl enable NetworkManager

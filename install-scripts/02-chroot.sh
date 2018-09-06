@@ -149,16 +149,16 @@ copy_configs(){
 	mkdir -p $HOMEDIR/.config/i3
 	
 	# i3 config
-	curl -Lo $HOMEDIR/.config/i3/config --create-dirs https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.config/i3/config
+	curl -L https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.config/i3/config > $HOMEDIR/.config/i3/config
 
 	# libinput gestures
-	curl -Lo $HOMEDIR/.config/libinput-gestures.conf --create-dirs https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.config/libinput-gestures.conf
+	curl -L https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.config/libinput-gestures.conf > $HOMEDIR/.config/libinput-gestures.conf
 
 	# .Xresources
-	curl -Lo $HOMEDIR/.Xresources --create-dirs https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.Xresources
+	curl -L https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.Xresources > $HOMEDIR/.Xresources
 
 	# .vimrc
-	curl -Lo $HOMEDIR/.vimrc --create-dirs https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.vimrc
+	curl -L https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.vimrc > $HOMEDIR/.vimrc
 
 	# vim-plug
 	# just realized I have a section in .vimrc which sets this up if it's missing
@@ -169,9 +169,7 @@ copy_configs(){
 	# vim +PlugInstall +qall
 
 	# .xinitrc
-	curl -Lo $HOMEDIR/.xinitrc --create-dirs https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.xinitrc
-
-}
+	curl -L https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.xinitrc > $HOMEDIR/.xinitrc
 
 postinstall(){
 	echo TODO

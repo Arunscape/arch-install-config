@@ -170,6 +170,7 @@ copy_configs(){
 
 	# .xinitrc
 	curl -L https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.xinitrc > $HOMEDIR/.xinitrc
+}
 
 postinstall(){
 	echo TODO

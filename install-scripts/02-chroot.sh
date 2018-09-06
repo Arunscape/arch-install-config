@@ -135,8 +135,8 @@ install_stuff(){
 		echo Installing stuff from AUR...
 		sudo -u $USERNAME yay -S --noconfirm \
 		firefox-developer-edition \
-		ttf-iosevka \     # cool font
-		libinput-gestures # touchpad gestures
+		ttf-iosevka \
+		libinput-gestures
 }
 
 copy_configs(){

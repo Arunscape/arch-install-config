@@ -139,39 +139,6 @@ install_stuff(){
 		libinput-gestures
 }
 
-copy_configs(){
-
-	echo Copying configs...
-
-	#local HOMEDIR = '/home/$USERNAME'
-	
-	# make directories as necessary
-	#mkdir -p $HOMEDIR/.config/i3
-	
-	# i3 config
-	sudo -u $USERNAME curl -L https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.config/i3/config > ~/.config/i3/config
-
-	# libinput gestures
-	sudo -u $USERNAME curl -L https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.config/libinput-gestures.conf > ~/.config/libinput-gestures.conf
-
-	# .Xresources
-	sudo -u $USERNAME curl -L https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.Xresources > ~/.Xresources
-
-	# .vimrc
-	sudo -u $USERNAME curl -L https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.vimrc > ~/.vimrc
-
-	# vim-plug
-	# just realized I have a section in .vimrc which sets this up if it's missing
-	#curl -Lo $HOMEDIR/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-
-	# doesn't work as nicely, should also be run as user postinstall I think
-	# echo Installing vim plugins...
-	# vim +PlugInstall +qall
-
-	# .xinitrc
-	sudo -u $USERNAME curl -L https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.xinitrc > ~/.xinitrc
-}
-
 postinstall(){
 	echo TODO
 }
@@ -179,5 +146,4 @@ postinstall(){
 
 setup
 install_stuff
-copy_configs
 exit

@@ -143,22 +143,22 @@ copy_configs(){
 
 	echo Copying configs...
 
-	local HOMEDIR = '/home/$USERNAME'
+	#local HOMEDIR = '/home/$USERNAME'
 	
 	# make directories as necessary
-	mkdir -p $HOMEDIR/.config/i3
+	#mkdir -p $HOMEDIR/.config/i3
 	
 	# i3 config
-	curl -L https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.config/i3/config > $HOMEDIR/.config/i3/config
+	sudo -u $USERNAME curl -L https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.config/i3/config > ~/.config/i3/config
 
 	# libinput gestures
-	curl -L https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.config/libinput-gestures.conf > $HOMEDIR/.config/libinput-gestures.conf
+	sudo -u $USERNAME curl -L https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.config/libinput-gestures.conf > ~/.config/libinput-gestures.conf
 
 	# .Xresources
-	curl -L https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.Xresources > $HOMEDIR/.Xresources
+	sudo -u $USERNAME curl -L https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.Xresources > ~/.Xresources
 
 	# .vimrc
-	curl -L https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.vimrc > $HOMEDIR/.vimrc
+	sudo -u $USERNAME curl -L https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.vimrc > ~/.vimrc
 
 	# vim-plug
 	# just realized I have a section in .vimrc which sets this up if it's missing
@@ -169,7 +169,7 @@ copy_configs(){
 	# vim +PlugInstall +qall
 
 	# .xinitrc
-	curl -L https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.xinitrc > $HOMEDIR/.xinitrc
+	sudo -u $USERNAME curl -L https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.xinitrc > ~/.xinitrc
 }
 
 postinstall(){

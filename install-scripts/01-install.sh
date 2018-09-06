@@ -179,7 +179,7 @@ copy_configs(){
 
 	echo Copying configs...
 
-	local HOMEDIR = '/mnt/home/$USERNAME'
+	local HOMEDIR='/mnt/home/$USERNAME'
 	
 	# make directories as necessary
 	mkdir -p $HOMEDIR/.config/i3

@@ -118,7 +118,8 @@ install_stuff(){
 		i3-gaps \
 		i3status \
 		rxvt-unicode \
-		vlc
+		vlc\
+		dmenu
 		# texlive-most \ # too big, install later when needed
 		#oh I might have forgotten pulseaudio
 
@@ -137,6 +138,10 @@ install_stuff(){
 		firefox-developer-edition \
 		ttf-iosevka \
 		libinput-gestures
+		
+		gpasswd -a $USERNAME input
+		libinput-gestures-setup autostart
+		libinput-gestures-setup start
 }
 
 postinstall(){

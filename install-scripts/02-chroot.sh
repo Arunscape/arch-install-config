@@ -125,7 +125,8 @@ install_stuff(){
 		texlive-most \
 		pulseaudio\
 		pavucontrol\
-		libreoffice-fresh
+		libreoffice-fresh\
+		gimp
 
 		systemctl enable NetworkManager
 

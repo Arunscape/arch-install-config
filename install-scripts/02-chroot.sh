@@ -120,8 +120,11 @@ install_stuff(){
 		rxvt-unicode \
 		vlc\
 		dmenu\
-		xorg-xrandr
-		# texlive-most \ # too big, install later when needed
+		xorg-xrandr\
+		arandr\
+		texlive-most \
+		pulseaudio\
+		pavucontrol
 		#oh I might have forgotten pulseaudio
 
 		systemctl enable NetworkManager

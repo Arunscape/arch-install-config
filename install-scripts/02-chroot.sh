@@ -142,7 +142,8 @@ install_stuff(){
 		sudo -u $USERNAME yay -S --noconfirm \
 		firefox-developer-edition \
 		ttf-iosevka \
-		libinput-gestures
+		libinput-gestures\
+		atom-editor-beta
 		
 		gpasswd -a $USERNAME input
 		sudo -u $USERNAME libinput-gestures-setup autostart

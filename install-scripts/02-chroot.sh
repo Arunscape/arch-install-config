@@ -126,7 +126,8 @@ install_stuff(){
 		pulseaudio\
 		pavucontrol\
 		libreoffice-fresh\
-		gimp
+		gimp\
+		hunspell-en_CA
 
 		systemctl enable NetworkManager
 

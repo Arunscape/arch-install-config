@@ -119,7 +119,8 @@ install_stuff(){
 		i3status \
 		rxvt-unicode \
 		vlc\
-		dmenu
+		dmenu\
+		xorg-xrandr
 		# texlive-most \ # too big, install later when needed
 		#oh I might have forgotten pulseaudio
 
@@ -140,8 +141,8 @@ install_stuff(){
 		libinput-gestures
 		
 		gpasswd -a $USERNAME input
-		libinput-gestures-setup autostart
-		libinput-gestures-setup start
+		sudo -u $USERNAME libinput-gestures-setup autostart
+		sudo -u $USERNAME libinput-gestures-setup start
 }
 
 postinstall(){

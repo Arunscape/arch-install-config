@@ -124,8 +124,8 @@ install_stuff(){
 		arandr\
 		texlive-most \
 		pulseaudio\
-		pavucontrol
-		#oh I might have forgotten pulseaudio
+		pavucontrol\
+		libreoffice-fresh
 
 		systemctl enable NetworkManager
 

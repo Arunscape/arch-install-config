@@ -123,11 +123,21 @@ install_stuff(){
 		xorg-xrandr\
 		arandr\
 		texlive-most \
+		perl-log-log4perl\
+		perl-namespace-autoclean\
+		perl-specio\
+		perl-datetime\
+		perl-yaml-tiny\
+		perl-unicode-linebreak\
 		pulseaudio\
 		pavucontrol\
 		libreoffice-fresh\
 		gimp\
-		hunspell-en_CA
+		hunspell-en_CA\
+		zathura\
+		zathura-pdf-poppler\
+		
+		
 
 		systemctl enable NetworkManager
 
@@ -144,7 +154,9 @@ install_stuff(){
 		firefox-developer-edition \
 		ttf-iosevka \
 		libinput-gestures\
-		atom-editor-beta
+		atom-editor-beta\
+		perl-log-dispatch\
+		perl-file-homedir\
 		
 		gpasswd -a $USERNAME input
 		sudo -u $USERNAME libinput-gestures-setup autostart

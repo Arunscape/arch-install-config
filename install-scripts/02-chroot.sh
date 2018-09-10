@@ -136,7 +136,7 @@ install_stuff(){
 		hunspell-en_CA\
 		zathura\
 		zathura-pdf-poppler\
-		
+		xorg=xinput
 		
 
 		systemctl enable NetworkManager

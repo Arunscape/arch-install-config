@@ -157,6 +157,7 @@ install_stuff(){
 		atom-editor-beta\
 		perl-log-dispatch\
 		perl-file-homedir\
+		urxvt-resize-font-git
 		
 		gpasswd -a $USERNAME input
 		sudo -u $USERNAME libinput-gestures-setup autostart

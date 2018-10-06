@@ -111,7 +111,7 @@ install_stuff(){
 
 	# install things
 	echo Installing stuff...
-		pacman -S --noconfirm \
+		pacman -S --noconfirm --needed\
 		vim \
 		git \
 		intel-ucode \
@@ -146,7 +146,10 @@ install_stuff(){
 		zathura-pdf-poppler\
 		xorg-xinput\
 		atom\
-		linux-lts
+		linux-lts\
+		deepin-screenshot\
+		ntfs-3g\
+		
 		
 
 		systemctl enable NetworkManager
@@ -160,7 +163,7 @@ install_stuff(){
 		rm -rf yay
 
 		echo Installing stuff from AUR...
-		sudo -u $USERNAME yay -S --noconfirm \
+		sudo -u $USERNAME yay -S --noconfirm --needed \
 		firefox-developer-edition \
 		ttf-iosevka \
 		libinput-gestures\

@@ -56,6 +56,14 @@ initrd  /initramfs-linux.img
 options root=PARTUUID=$diskuuid rw
 EOF
 
+	cat > boot/loader/entries/arch-lts.conf << EOF
+title   Arch Linux LTS Kernel
+linux   /vmlinuz-linux-lts
+initrd  /intel-ucode.img
+initrd  /initramfs-linux-lts.img
+options root=PARTUUID=$diskuuid rw
+EOF
+
 	bootctl install
 
 # hook to run bootctl update whenever systemd is updated
@@ -136,7 +144,9 @@ install_stuff(){
 		hunspell-en_CA\
 		zathura\
 		zathura-pdf-poppler\
-		xorg=xinput
+		xorg-xinput\
+		atom\
+		linux-lts
 		
 
 		systemctl enable NetworkManager
@@ -154,7 +164,6 @@ install_stuff(){
 		firefox-developer-edition \
 		ttf-iosevka \
 		libinput-gestures\
-		atom-editor-beta\
 		perl-log-dispatch\
 		perl-file-homedir\
 		urxvt-resize-font-git

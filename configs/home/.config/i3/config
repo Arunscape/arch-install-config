@@ -178,6 +178,10 @@ exec --no-startup-id nm-applet
 bindsym $mod+a workspace prev
 bindsym $mod+z workspace next
 
+# move workspace to monitor
+bindsym $mod+Shift+greater move workspace to output right
+bindsym $mod+Shift+less move workspace to output left
+
 #no window border
 default_border none
 new_window pixel 0
@@ -219,3 +223,4 @@ mode "$mode_gaps_outer" {
         bindsym Return mode "default"
         bindsym Escape mode "default"
 }
+exec --no-startup-id /usr/bin/gnome-keyring-daemon --start --components=secrets

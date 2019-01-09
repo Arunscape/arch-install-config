@@ -23,6 +23,21 @@ endif
 call plug#begin('~/.vim/plugged')
 "Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
 Plug 'lervag/vimtex'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+Plug 'itchyny/lightline.vim'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'tpope/vim-eunuch'
+Plug 'tpope/vim-surround'
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'editorconfig/editorconfig-vim'
+Plug 'mattn/emmet-vim'
+Plug 'w0rp/ale'
+Plug 'airblade/vim-gitgutter'
+Plug 'janko-m/vim-test'
+Plug 'sjl/badwolf'
+Plug 'nathanaelkane/vim-indent-guides'
+Plug 'romgrk/winteract.vim'
 
 " post install (yarn install | npm install) then load plugin only for editing supported files
 Plug 'prettier/vim-prettier', {

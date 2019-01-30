@@ -38,9 +38,21 @@ Plug 'janko-m/vim-test'
 Plug 'sjl/badwolf'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'romgrk/winteract.vim'
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+Plug 'ludovicchabant/vim-gutentags'
 
 " post install (yarn install | npm install) then load plugin only for editing supported files
 Plug 'prettier/vim-prettier', {
   \ 'do': 'yarn install',
-  \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue'] }
+  \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html'] }
 call plug#end()
+
+colorscheme badwolf
+
+
+let g:prettier#exec_cmd_async = 1
+let g:prettier#autoformat = 0
+autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html PrettierAsync
+
+
+map <C-\> :tab split<CR>:exec("tag ".expand("<cword>"))<CR>

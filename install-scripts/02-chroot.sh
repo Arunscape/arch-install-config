@@ -56,6 +56,14 @@ initrd  /initramfs-linux.img
 options root=PARTUUID=$diskuuid rw
 EOF
 
+	cat > boot/loader/entries/arch-lts.conf << EOF
+title   Arch Linux LTS Kernel
+linux   /vmlinuz-linux-lts
+initrd  /intel-ucode.img
+initrd  /initramfs-linux-lts.img
+options root=PARTUUID=$diskuuid rw
+EOF
+
 	bootctl install
 
 # hook to run bootctl update whenever systemd is updated
@@ -103,7 +111,7 @@ install_stuff(){
 
 	# install things
 	echo Installing stuff...
-		pacman -S --noconfirm \
+		pacman -S --noconfirm --needed\
 		vim \
 		git \
 		intel-ucode \
@@ -136,7 +144,12 @@ install_stuff(){
 		hunspell-en_CA\
 		zathura\
 		zathura-pdf-poppler\
-		xorg=xinput
+		xorg-xinput\
+		atom\
+		linux-lts\
+		deepin-screenshot\
+		ntfs-3g\
+		
 		
 
 		systemctl enable NetworkManager
@@ -150,13 +163,13 @@ install_stuff(){
 		rm -rf yay
 
 		echo Installing stuff from AUR...
-		sudo -u $USERNAME yay -S --noconfirm \
+		sudo -u $USERNAME yay -S --noconfirm --needed \
 		firefox-developer-edition \
 		ttf-iosevka \
 		libinput-gestures\
-		atom-editor-beta\
 		perl-log-dispatch\
 		perl-file-homedir\
+		urxvt-resize-font-git
 		
 		gpasswd -a $USERNAME input
 		sudo -u $USERNAME libinput-gestures-setup autostart

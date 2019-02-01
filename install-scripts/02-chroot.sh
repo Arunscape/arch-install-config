@@ -115,42 +115,10 @@ install_stuff(){
 		vim \
 		git \
 		intel-ucode \
-		xorg-server \
-		xorg-xinit \
-		nvidia \
-		bbswitch \
 		linux-headers \
-		xf86-input-libinput \
 		networkmanager \
-		network-manager-applet \
-		i3-gaps \
-		i3status \
-		rxvt-unicode \
-		vlc\
-		dmenu\
-		xorg-xrandr\
-		arandr\
-		texlive-most \
-		perl-log-log4perl\
-		perl-namespace-autoclean\
-		perl-specio\
-		perl-datetime\
-		perl-yaml-tiny\
-		perl-unicode-linebreak\
-		pulseaudio\
-		pavucontrol\
-		libreoffice-fresh\
-		gimp\
-		hunspell-en_CA\
-		zathura\
-		zathura-pdf-poppler\
-		xorg-xinput\
-		atom\
-		linux-lts\
-		deepin-screenshot\
-		ntfs-3g\
-		
-		
+		linux-lts \
+		ntfs-3g
 
 		systemctl enable NetworkManager
 
@@ -166,10 +134,7 @@ install_stuff(){
 		sudo -u $USERNAME yay -S --noconfirm --needed \
 		firefox-developer-edition \
 		ttf-iosevka \
-		libinput-gestures\
-		perl-log-dispatch\
-		perl-file-homedir\
-		urxvt-resize-font-git
+		libinput-gestures
 		
 		gpasswd -a $USERNAME input
 		sudo -u $USERNAME libinput-gestures-setup autostart

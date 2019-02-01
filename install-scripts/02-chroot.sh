@@ -120,7 +120,8 @@ install_stuff(){
 		network-manager-applet \
 		linux-lts \
 		otf-fira-code \
-		ntfs-3g
+		ntfs-3g \
+		kitty
 
 		systemctl enable NetworkManager
 
@@ -136,7 +137,9 @@ install_stuff(){
 		sudo -u $USERNAME yay -S --noconfirm --needed \
 		ttf-emojione \
 		firefox-developer-edition \
-		libinput-gestures
+		libinput-gestures \
+		wlroots-git \
+		sway-git
 		
 		gpasswd -a $USERNAME input
 		sudo -u $USERNAME libinput-gestures-setup autostart

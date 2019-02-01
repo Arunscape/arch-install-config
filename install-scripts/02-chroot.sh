@@ -150,4 +150,4 @@ postinstall(){
 
 setup
 install_stuff
-exit
+#exit

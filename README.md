@@ -1,7 +1,8 @@
-# [super early beta probably works but idk] Arch Install Cheatsheet for UEFI systemd-boot and GNOME / i3
 
-
+run this on a live USB
+```
 curl -L https://goo.gl/6Dj3UA -o install.sh
+```
 
 # Download
 save this as a script and run (make sure you change sdX to the correct drive!!)
@@ -19,6 +20,7 @@ curl -L http://mirrors.kernel.org/archlinux/iso/$archiso_latest/archlinux-$archi
 #dd bs=4M if=/path/to/archlinux.iso of=/dev/sdX status=progress oflag=sync
 ```
 
+## Manual install steps
 ### Connect to wifi
 ```bash
 wifi-menu
@@ -149,15 +151,6 @@ exit
 reboot
 ```
 
-# stuff i install
-```bash
-sudo pacman -Syyu
-sudo pacman -S xorg-server xorg-xinit
-sudo pacman -S gnome
-sudo pacman -S i3
-sudo pacman -S nvidia bbswitch linux-headers
-```
-
 # Rank Mirrors
 ```bash
 cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak
@@ -165,18 +158,7 @@ rankmirrors -n 6 /etc/pacman.d/mirrorlist.bak > /etc/pacman.d/mirrorlist
 ```
 
 
-
-# postinstall
-```bash
-cd Downloads
-git clone https://aur.archlinux.org/yay.git
-cd yay
-makepkg -si
-sudo pacman -S networkmanager gnome i3 i3-gaps i3status network-manager-applet rxvt-unicode nvidia
-yay -S firefox-developer-edition atom-beta
-```
-
-# Gnome theming (i3 soon)
+# Gnome theming (I don't use gnome anymore)
 https://github.com/adapta-project/adapta-gtk-theme
 
 https://github.com/PapirusDevelopmentTeam/papirus-icon-theme
@@ -192,14 +174,6 @@ https://extensions.gnome.org/extension/427/workspaces-to-dock/
 ```bash
 sudo pacman -S gnome-tweaks chrome-gnome-shell adapta-gtk-theme papirus-icon-theme
  
-```
-
-# i3 stuff
-install this amazing font https://github.com/be5invis/Iosevka
-also install libinput gestures
-```bash
-sudo pacman -S xf86-input-libinput
-yay -S ttf-iosevka libinput-gestures
 ```
 
 ## Backing up

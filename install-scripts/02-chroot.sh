@@ -120,7 +120,6 @@ install_stuff(){
 		network-manager-applet \
 		linux-lts \
 		otf-fira-code \
-		ttf-emojione \
 		ntfs-3g
 
 		systemctl enable NetworkManager
@@ -135,6 +134,7 @@ install_stuff(){
 
 		echo Installing stuff from AUR...
 		sudo -u $USERNAME yay -S --noconfirm --needed \
+	        ttf-emojione \
 		firefox-developer-edition \
 		libinput-gestures
 		

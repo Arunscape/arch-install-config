@@ -104,10 +104,10 @@ EOF
 install_stuff(){
 
 	# rank mirrors
-	pacman -S --noconfirm pacman-contrib
-	echo 'Ranking mirrors.. This will take a while...'
-	cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bakup
-	curl https://www.archlinux.org/mirrorlist/all/https/ | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -n 6 - > /etc/pacman.d/mirrorlist
+	#pacman -S --noconfirm pacman-contrib
+	#echo 'Ranking mirrors.. This will take a while...'
+	#cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bakup
+	#curl https://www.archlinux.org/mirrorlist/all/https/ | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -n 6 - > /etc/pacman.d/mirrorlist
 
 	# install things
 	echo Installing stuff...
@@ -119,6 +119,8 @@ install_stuff(){
 		networkmanager \
 		network-manager-applet \
 		linux-lts \
+		otf-fira-code \
+		ttf-emojione \
 		ntfs-3g
 
 		systemctl enable NetworkManager
@@ -134,7 +136,6 @@ install_stuff(){
 		echo Installing stuff from AUR...
 		sudo -u $USERNAME yay -S --noconfirm --needed \
 		firefox-developer-edition \
-		ttf-iosevka \
 		libinput-gestures
 		
 		gpasswd -a $USERNAME input

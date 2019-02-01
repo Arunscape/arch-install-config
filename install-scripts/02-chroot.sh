@@ -117,6 +117,7 @@ install_stuff(){
 		intel-ucode \
 		linux-headers \
 		networkmanager \
+		network-manager-applet \
 		linux-lts \
 		ntfs-3g
 

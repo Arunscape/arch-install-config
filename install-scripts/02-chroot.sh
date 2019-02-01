@@ -134,7 +134,7 @@ install_stuff(){
 
 		echo Installing stuff from AUR...
 		sudo -u $USERNAME yay -S --noconfirm --needed \
-	        ttf-emojione \
+		ttf-emojione \
 		firefox-developer-edition \
 		libinput-gestures
 		

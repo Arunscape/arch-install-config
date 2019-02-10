@@ -188,6 +188,9 @@ copy_configs(){
 	# sway config
 	curl -Lo $HOMEDIR/.config/i3/config https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.config/sway/config
 
+	# kitty
+	curl -Lo $HOMEDIR/.config/kitty/kitty.conf https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.config/kitty/kitty.conf
+	
 	# libinput gestures
 	curl -Lo $HOMEDIR/.config/libinput-gestures.conf https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.config/libinput-gestures.conf
 

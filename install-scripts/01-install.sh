@@ -210,6 +210,9 @@ copy_configs(){
 
 	# .xinitrc
 	curl -Lo $HOMEDIR/.xinitrc https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.xinitrc
+	
+	# wallpaper
+	curl -Lo $HOMEDIR/Excision_APEX_3840x2160_Wallpaper.jpg https://github.com/Arunscape/arch-install-config/raw/master/configs/home/Excision_APEX_3840x2160_Wallpaper.jpg
 }
 
 finish(){

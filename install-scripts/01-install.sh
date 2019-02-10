@@ -182,10 +182,11 @@ copy_configs(){
 	local HOMEDIR='/mnt/home/'$USERNAME
 	
 	# make directories as necessary
-	mkdir -p $HOMEDIR/.config/i3
+	mkdir -p $HOMEDIR/.config/kitty
+	mkdir -p $HOMEDIR/.config/sway
 	
-	# i3 config
-	curl -Lo $HOMEDIR/.config/i3/config https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.config/i3/config
+	# sway config
+	curl -Lo $HOMEDIR/.config/i3/config https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.config/sway/config
 
 	# libinput gestures
 	curl -Lo $HOMEDIR/.config/libinput-gestures.conf https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.config/libinput-gestures.conf

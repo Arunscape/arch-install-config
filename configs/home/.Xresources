@@ -1,62 +1,62 @@
-! do not scroll with output
-URxvt*scrollTtyOutput: false
+! Colors definition {{{
+#define   plain            #f8f6f2
+#define   snow             #ffffff
+#define   coal             #000000
 
-! scroll in relation to buffer (with mouse scroll or Shift+Page Up)
-URxvt*scrollWithBuffer: true
+#define   brightgravel     #d9cec3
+#define   lightgravel      #998f84
+#define   gravel           #857f78
+#define   mediumgravel     #666462
+#define   deepgravel       #45413b
+#define   deepergravel     #35322d
+#define   darkgravel       #242321
+#define   blackgravel      #1c1b1a
+#define   blackestgravel   #141413
 
-! scroll back to the bottom on keypress
-URxvt*scrollTtyKeypress: true
+#define   dalespale        #fade3e
+#define   dirtyblonde      #f4cf86
+#define   taffy            #ff2c4b
+#define   saltwatertaffy   #8cffba
+#define   tardis           #0a9dff
+#define   orange           #ffa724
+#define   lime             #aeee00
+#define   dress            #ff9eb8
+#define   toffee           #b88853
+#define   coffee           #c7915b
+#define   darkroast        #88633f
+! }}}
 
-! disable scrollbar
-URxvt.scrollBar: false
 
-! colours
-!URxvt*background: #111111
-!URxvt*foreground: #eeeeee
+! Resourses {{{
+*background:  blackgravel
+*foreground:  plain
+*cursorColor: lime
+*scrollColor: deepgravel
+*fadeColor:   snow
+*fading:      20
 
-! font
-URxvt.font:xft:iosevka-regular:size=12
-URxvt.boldfont:xft:iosevka-bold:size=12
-
-! resize font on the fly
-URxvt.perl-ext-common:  ...,resize-font,...
-
-! colours ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-! from http://terminal.sexy
-! special
-*.foreground:   #c5c8c6
-*.background:   #1d1f21
-*.cursorColor:  #c5c8c6
-
-! black
-*.color0:       #282a2e
-*.color8:       #373b41
-
-! red
-*.color1:       #a54242
-*.color9:       #cc6666
-
-! green
-*.color2:       #8c9440
-*.color10:      #b5bd68
-
-! yellow
-*.color3:       #de935f
-*.color11:      #f0c674
-
-! blue
-*.color4:       #5f819d
-*.color12:      #81a2be
-
-! magenta
-*.color5:       #85678f
-*.color13:      #b294bb
-
-! cyan
-*.color6:       #5e8d87
-*.color14:      #8abeb7
-
-! white
-*.color7:       #707880
-*.color15:      #c5c8c6
-!~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+!        black
+*color0:      blackestgravel
+*color8:      coal
+!        red
+*color1:      taffy
+*color9:      taffy
+!        green
+*color2:      lime
+*color10:     lime
+!        yellow
+*color3:      dalespale
+*color11:     orange
+!        blue
+*color4:      tardis
+*color12:     tardis
+!        magenta
+*color5:      dress
+*color13:     dress
+!        cyan
+*color6:      saltwatertaffy
+*color14:     saltwatertaffy
+!        white
+*color7:      brightgravel
+*color15:     snow
+! }}}

@@ -137,7 +137,9 @@ install_stuff(){
 		echo Installing stuff from AUR...
 		sudo -u $USERNAME yay -S --noconfirm --needed \
 		ttf-emojione \
+		flat-remix-git \
 		firefox-developer-edition \
+		universal-ctags-git \
 		libinput-gestures \
 		wlroots-git \
 		sway-git \

@@ -116,14 +116,16 @@ install_stuff(){
 		git \
 		intel-ucode \
 		linux-headers \
-		networkmanager \
-		network-manager-applet \
 		linux-lts \
 		otf-fira-code \
 		ntfs-3g \
-		kitty
+		kitty \
+		connman \
+		wpa_supplicant \
+		pulseaudio \
+		brillo
 
-		systemctl enable NetworkManager
+		systemctl enable connman.service
 
 		echo Installing yay...
 		git clone https://aur.archlinux.org/yay.git

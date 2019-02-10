@@ -1,7 +1,7 @@
 
 run this on a live USB
 ```
-curl -L https://goo.gl/6Dj3UA -o install.sh
+curl -Lo install.sh https://git.io/fhHjd | bash
 ```
 
 # Download

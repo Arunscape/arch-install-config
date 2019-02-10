@@ -122,8 +122,7 @@ install_stuff(){
 		kitty \
 		connman \
 		wpa_supplicant \
-		pulseaudio \
-		brillo
+		pulseaudio
 
 		systemctl enable connman.service
 
@@ -141,7 +140,8 @@ install_stuff(){
 		firefox-developer-edition \
 		libinput-gestures \
 		wlroots-git \
-		sway-git
+		sway-git \
+		brillo
 		
 		gpasswd -a $USERNAME input
 		sudo -u $USERNAME libinput-gestures-setup autostart

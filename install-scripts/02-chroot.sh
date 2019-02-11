@@ -122,7 +122,10 @@ install_stuff(){
 		kitty \
 		connman \
 		wpa_supplicant \
-		pulseaudio
+		pulseaudio \
+		wlroots \
+		gnome-keyring \
+		libsecret
 
 		systemctl enable connman.service
 
@@ -141,7 +144,6 @@ install_stuff(){
 		firefox-developer-edition \
 		universal-ctags-git \
 		libinput-gestures \
-		wlroots-git \
 		sway-git \
 		brillo
 		

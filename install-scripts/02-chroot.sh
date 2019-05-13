@@ -98,6 +98,7 @@ EOF
 
 	# makes pacman and yay colourful
 	sed -i "s/#Color^/Color/g" /etc/pacman.conf
+	echo ILoveCandy >> /etc/pacman.conf
 
 }
 
@@ -117,15 +118,20 @@ install_stuff(){
 		intel-ucode \
 		linux-headers \
 		linux-lts \
-		otf-fira-code \
 		ntfs-3g \
 		kitty \
 		connman \
 		wpa_supplicant \
 		pulseaudio \
-		wlroots \
 		gnome-keyring \
-		libsecret
+		libsecret \
+		sway \
+		wlroots \
+		wl-clipboard \
+		slurp \
+		grim \
+		noto-fonts-emoji \
+
 
 		systemctl enable connman.service
 
@@ -139,17 +145,18 @@ install_stuff(){
 
 		echo Installing stuff from AUR...
 		sudo -u $USERNAME yay -S --noconfirm --needed \
-		ttf-emojione \
 		flat-remix-git \
 		firefox-developer-edition \
-		universal-ctags-git \
 		libinput-gestures \
-		sway-git \
-		brillo
+		brillo \
+		otf-nerd-fonts-fira-code
+		# universal-ctags-git \
 		
 		gpasswd -a $USERNAME input
 		sudo -u $USERNAME libinput-gestures-setup autostart
 		sudo -u $USERNAME libinput-gestures-setup start
+
+		git config --global credential.helper /usr/lib/git-core/git-credential-libsecret
 }
 
 postinstall(){

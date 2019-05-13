@@ -240,3 +240,15 @@ new_window pixel 0
 gaps inner 5
 gaps outer 0
 smart_gaps on
+
+
+#screenshot to clipboard
+bindsym --release Print exec grim -g \"$(slurp)" - | wl-copy
+
+#previous/next workspace
+bindsym $mod+a workspace prev
+bindsym $mod+z workspace next
+
+# move workspace to monitor
+bindsym $mod+Shift+period move workspace to output right
+bindsym $mod+Shift+comma move workspace to output Left

@@ -175,30 +175,30 @@ chroot_step(){
 	arch-chroot /mnt bash install.sh $USERNAME $USER_PASSWD $HOST_NAME $TIMEZONE $DRIVE
 }
 
-copy_configs(){
+# copy_configs(){
 
-	echo Copying configs...
+	# echo Copying configs...
 
-	local HOMEDIR='/mnt/home/'$USERNAME
+	# local HOMEDIR='/mnt/home/'$USERNAME
 	
 	# make directories as necessary
-	mkdir -p $HOMEDIR/.config/kitty
-	mkdir -p $HOMEDIR/.config/sway
+	# mkdir -p $HOMEDIR/.config/kitty
+	# mkdir -p $HOMEDIR/.config/sway
 	
 	# sway config
-	curl -Lo $HOMEDIR/.config/sway/config https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.config/sway/config
+	# curl -Lo $HOMEDIR/.config/sway/config https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.config/sway/config
 
 	# kitty
-	curl -Lo $HOMEDIR/.config/kitty/kitty.conf https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.config/kitty/kitty.conf
+	# curl -Lo $HOMEDIR/.config/kitty/kitty.conf https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.config/kitty/kitty.conf
 	
 	# libinput gestures
-	curl -Lo $HOMEDIR/.config/libinput-gestures.conf https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.config/libinput-gestures.conf
+	# curl -Lo $HOMEDIR/.config/libinput-gestures.conf https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.config/libinput-gestures.conf
 
 	# .Xresources
-	curl -Lo $HOMEDIR/.Xresources https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.Xresources
+	# curl -Lo $HOMEDIR/.Xresources https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.Xresources
 
 	# .vimrc
-	curl -Lo $HOMEDIR/.vimrc https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.vimrc
+	# curl -Lo $HOMEDIR/.vimrc https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.vimrc
 	
 	# vim-plug
 	# just realized I have a section in .vimrc which sets this up if it's missing
@@ -209,11 +209,11 @@ copy_configs(){
 	# vim +PlugInstall +qall
 
 	# .xinitrc
-	curl -Lo $HOMEDIR/.xinitrc https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.xinitrc
+	# curl -Lo $HOMEDIR/.xinitrc https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.xinitrc
 	
 	# wallpaper
-	curl -Lo $HOMEDIR/Excision_APEX_3840x2160_Wallpaper.jpg https://github.com/Arunscape/arch-install-config/raw/master/configs/home/Excision_APEX_3840x2160_Wallpaper.jpg
-}
+	# curl -Lo $HOMEDIR/Excision_APEX_3840x2160_Wallpaper.jpg https://github.com/Arunscape/arch-install-config/raw/master/configs/home/Excision_APEX_3840x2160_Wallpaper.jpg
+# }
 
 finish(){
 	# exit and reboot
@@ -227,5 +227,5 @@ setup
 format
 run_pacstrap
 chroot_step
-copy_configs
+# copy_configs
 finish

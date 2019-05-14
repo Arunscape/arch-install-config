@@ -97,8 +97,8 @@ EOF
 	usermod -p '!' root
 
 	# makes pacman and yay colourful
-	sed -i "s/#Color^/Color/g" /etc/pacman.conf
-	echo ILoveCandy >> /etc/pacman.conf
+	sed -i "s/^#Color/Color/" /etc/pacman.conf
+	sed -i "/^Color/a ILoveCandy" /etc/pacman.conf
 
 }
 
@@ -125,15 +125,18 @@ install_stuff(){
 		pulseaudio \
 		gnome-keyring \
 		libsecret \
-		sway \
-		wlroots \
 		wl-clipboard \
 		slurp \
 		grim \
 		noto-fonts-emoji \
+		# firefox-developer-edition
+
+		echo Installing sway and wlroots because somehow the order matters
+		pacman -S --noconfirm --needed wlroots
+		pacman -S --noconfirm --needed sway
 
 
-		systemctl enable connman.service
+		systemctl enable connman
 
 		echo Installing yay...
 		git clone https://aur.archlinux.org/yay.git
@@ -145,18 +148,17 @@ install_stuff(){
 
 		echo Installing stuff from AUR...
 		sudo -u $USERNAME yay -S --noconfirm --needed \
-		flat-remix-git \
-		firefox-developer-edition \
 		libinput-gestures \
 		brillo \
 		otf-nerd-fonts-fira-code
+		# flat-remix-git \
 		# universal-ctags-git \
 		
 		gpasswd -a $USERNAME input
 		sudo -u $USERNAME libinput-gestures-setup autostart
 		sudo -u $USERNAME libinput-gestures-setup start
 
-		git config --global credential.helper /usr/lib/git-core/git-credential-libsecret
+		sudo -u $USERNAME git config --global credential.helper /usr/lib/git-core/git-credential-libsecret
 }
 
 postinstall(){

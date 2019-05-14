@@ -179,17 +179,17 @@ chroot_step(){
 
 	# echo Copying configs...
 
-	local HOMEDIR='/mnt/home/'$USERNAME
+	# local HOMEDIR='/mnt/home/'$USERNAME
 	
 	# make directories as necessary
 	# mkdir -p $HOMEDIR/.config/kitty
 	# mkdir -p $HOMEDIR/.config/sway
 	
 	# sway config
-	curl -Lo $HOMEDIR/.config/sway/config https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.config/sway/config
+	# curl -Lo $HOMEDIR/.config/sway/config https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.config/sway/config
 
 	# kitty
-	curl -Lo $HOMEDIR/.config/kitty/kitty.conf https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.config/kitty/kitty.conf
+	# curl -Lo $HOMEDIR/.config/kitty/kitty.conf https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.config/kitty/kitty.conf
 	
 	# libinput gestures
 	# curl -Lo $HOMEDIR/.config/libinput-gestures.conf https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.config/libinput-gestures.conf
@@ -220,7 +220,7 @@ finish(){
 	rm /mnt/install.sh
 	umount -R /mnt
 	echo "$(tput bold)$(tput setaf 2)Done!!!$(tput sgr 0)"
-	reboot
+	# reboot
 }
 
 setup

@@ -104,7 +104,11 @@ EOF
 install_stuff(){
     
     pacman -S --noconfirm --needed \
-    git
+    git \
+    $CPU-ucode \
+    linux-headers \
+    linux-lts
+    
     
     echo Installing yay...
     git clone https://aur.archlinux.org/yay.git

@@ -103,6 +103,9 @@ EOF
 
 install_stuff(){
     
+    pacman -S --noconfirm --needed \
+    git
+    
     echo Installing yay...
     git clone https://aur.archlinux.org/yay.git
     chmod 777 -R yay

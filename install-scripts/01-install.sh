@@ -113,7 +113,6 @@ setup(){
                 echo Type either amd or intel exactly
             fi
         done
-        
     fi
     if [ -z "$WIFI" ]
     then

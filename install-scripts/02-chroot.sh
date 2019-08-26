@@ -152,7 +152,8 @@ install_stuff(){
     # flat-remix-git \
     # universal-ctags-git \
     
-    if [ -z "$WIFI"] then
+    if [ -z "$WIFI"]
+    then
         :
     else
         pacman -S --noconfirm --needed\

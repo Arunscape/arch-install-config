@@ -4,11 +4,7 @@
 # install arch to this drive ex: /dev/sda or /dev/sdb... etc
 DRIVE=''
 
-#
 HOST_NAME=''
-
-# not required, root account is now disabled in install script
-# ROOT_PASSWD=''
 
 # has to be all lowercase
 USERNAME=''
@@ -175,17 +171,6 @@ format(){
     mkdir /mnt/home
     mount $bootpart /mnt/boot
     mount $homepart /mnt/home
-    
-    #echo "Do you want to edit the mirrorlist? y/n"
-    #read editmirrorlist
-    #if [[ "$choice" == [Yy]* ]]
-    #then
-    #	vim /etc/pacman.d/mirrorlist
-    #fi
-    
-    # this mirror works fast enough for me
-    # echo 'Server = https://mirrors.kernel.org/archlinux/$repo/os/$arch' > /etc/pacman.d/mirrorlist
-    # turns out that this is the default mirror anyways
 }
 
 
@@ -203,46 +188,6 @@ chroot_step(){
     arch-chroot /mnt bash install.sh $USERNAME $USER_PASSWD $HOST_NAME $TIMEZONE $DRIVE $CPU $WIFI
 }
 
-# copy_configs(){
-
-# echo Copying configs...
-
-# local HOMEDIR='/mnt/home/'$USERNAME
-
-# make directories as necessary
-# mkdir -p $HOMEDIR/.config/kitty
-# mkdir -p $HOMEDIR/.config/sway
-
-# sway config
-# curl -Lo $HOMEDIR/.config/sway/config https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.config/sway/config
-
-# kitty
-# curl -Lo $HOMEDIR/.config/kitty/kitty.conf https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.config/kitty/kitty.conf
-
-# libinput gestures
-# curl -Lo $HOMEDIR/.config/libinput-gestures.conf https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.config/libinput-gestures.conf
-
-# .Xresources
-# curl -Lo $HOMEDIR/.Xresources https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.Xresources
-
-# .vimrc
-# curl -Lo $HOMEDIR/.vimrc https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.vimrc
-
-# vim-plug
-# just realized I have a section in .vimrc which sets this up if it's missing
-#curl -Lo $HOMEDIR/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-
-# doesn't work as nicely, should also be run as user postinstall I think
-# echo Installing vim plugins...
-# vim +PlugInstall +qall
-
-# .xinitrc
-# curl -Lo $HOMEDIR/.xinitrc https://raw.githubusercontent.com/Arunscape/arch-install-config/master/configs/home/.xinitrc
-
-# wallpaper
-# curl -Lo $HOMEDIR/Excision_APEX_3840x2160_Wallpaper.jpg https://github.com/Arunscape/arch-install-config/raw/master/configs/home/Excision_APEX_3840x2160_Wallpaper.jpg
-# }
-
 finish(){
     # exit and reboot
     rm /mnt/install.sh
@@ -255,5 +200,4 @@ setup
 format
 run_pacstrap
 chroot_step
-# copy_configs
 finish

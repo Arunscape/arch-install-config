@@ -10,20 +10,14 @@ WIFI=$7
 
 setup(){
     
-    # Timezone
+    echo Setting timezone...
     ln -sf /usr/share/zoneinfo/$TIMEZONE /etc/localtime
     
-    # Run hwclock(8) to generate /etc/adjtime:
+    echo running hwclock...
     hwclock --systohc
     
-    # Hostname
+    echo Setting hostname...
     echo $HOST_NAME > /etc/hostname
-    
-    # Set root passwwd
-    #(
-    #echo $ROOT_PASSWD
-    #echo $ROOT_PASSWD
-    #) | passwd
     
     # Localization
     echo Uncommenting these lines in /etc/locale.gen:
@@ -68,6 +62,7 @@ initrd  /initramfs-linux-lts.img
 options root=PARTUUID=$diskuuid rw
 EOF
     
+    echo running bootctl install...
     bootctl install
     
     # hook to run bootctl update whenever systemd is updated
@@ -108,36 +103,6 @@ EOF
 
 install_stuff(){
     
-    # rank mirrors
-    #pacman -S --noconfirm pacman-contrib
-    #echo 'Ranking mirrors.. This will take a while...'
-    #cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bakup
-    #curl https://www.archlinux.org/mirrorlist/all/https/ | sed -e 's/^#Server/Server/' -e '/^#/d' | rankmirrors -n 6 - > /etc/pacman.d/mirrorlist
-    
-    # install things
-    echo Installing stuff...
-    pacman -S --noconfirm --needed\
-    vim \
-    git \
-    $CPU-ucode \
-    linux-headers \
-    linux-lts \
-    ntfs-3g \
-    kitty \
-    pulseaudio \
-    gnome-keyring \
-    libsecret \
-    wl-clipboard \
-    slurp \
-    grim \
-    ttf-joypixels
-    # firefox-developer-edition
-    
-    echo Installing sway and wlroots because somehow the order matters
-    pacman -S --noconfirm --needed wlroots
-    pacman -S --noconfirm --needed sway
-    
-    
     echo Installing yay...
     git clone https://aur.archlinux.org/yay.git
     chmod 777 -R yay
@@ -146,12 +111,6 @@ install_stuff(){
     cd ..
     rm -rf yay
     
-    echo Installing stuff from AUR...
-    sudo -u $USERNAME yay -S --noconfirm --needed \
-    nerd-fonts-fira-code
-    # flat-remix-git \
-    # universal-ctags-git \
-    
     if [ -z "$WIFI"]
     then
         :
@@ -159,26 +118,15 @@ install_stuff(){
         pacman -S --noconfirm --needed\
         connman \
         wpa_supplicant
-        
-        yay -S --noconfirm --needed \
-        libinput-gestures \
-        brillo
-        # doesn't work, see https://superuser.com/questions/688733/start-a-systemd-service-inside-chroot
-        # systemctl enable connman
-        
-        gpasswd -a $USERNAME input
-        sudo -u $USERNAME libinput-gestures-setup autostart
-        sudo -u $USERNAME libinput-gestures-setup start
     fi
-    
-    sudo -u $USERNAME git config --global credential.helper /usr/lib/git-core/git-credential-libsecret
 }
 
-postinstall(){
-    echo TODO
+clone_configs(){
+    cd /home/$USERNAME
+    sudo -u $USERNAME git clone https://github.com/Arunscape/dotfiles.git
 }
-
 
 setup
 install_stuff
-#exit
+clone_configs
+exit

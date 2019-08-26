@@ -5,6 +5,8 @@ USER_PASSWD=$2
 HOST_NAME=$3
 TIMEZONE=$4
 DRIVE=$5
+CPU=$6
+WIFI=$7
 
 setup(){
 
@@ -26,7 +28,9 @@ setup(){
 	# Localization
 	echo Uncommenting these lines in /etc/locale.gen:
 	cat /etc/locale.gen | grep en_CA
+	cat /etc/locale.gen | grep en_US
 	sed -i '/en_CA/ s/^#//' /etc/locale.gen
+	sed -i '/en_US/ s/^#//' /etc/locale.gen
 
 	echo LANG=en_CA.UTF-8 > /etc/locale.conf
 
@@ -51,7 +55,7 @@ EOF
 	cat > boot/loader/entries/arch.conf << EOF
 title   Arch Linux
 linux   /vmlinuz-linux
-initrd  /intel-ucode.img
+initrd  /$CPU-ucode.img
 initrd  /initramfs-linux.img
 options root=PARTUUID=$diskuuid rw
 EOF
@@ -59,7 +63,7 @@ EOF
 	cat > boot/loader/entries/arch-lts.conf << EOF
 title   Arch Linux LTS Kernel
 linux   /vmlinuz-linux-lts
-initrd  /intel-ucode.img
+initrd  /$CPU-ucode.img
 initrd  /initramfs-linux-lts.img
 options root=PARTUUID=$diskuuid rw
 EOF
@@ -115,28 +119,24 @@ install_stuff(){
 		pacman -S --noconfirm --needed\
 		vim \
 		git \
-		intel-ucode \
+		$CPU-ucode \
 		linux-headers \
 		linux-lts \
 		ntfs-3g \
 		kitty \
-		connman \
-		wpa_supplicant \
 		pulseaudio \
 		gnome-keyring \
 		libsecret \
 		wl-clipboard \
 		slurp \
 		grim \
-		noto-fonts-emoji \
+		ttf-joypixels
 		# firefox-developer-edition
 
 		echo Installing sway and wlroots because somehow the order matters
 		pacman -S --noconfirm --needed wlroots
 		pacman -S --noconfirm --needed sway
 
-
-		systemctl enable connman
 
 		echo Installing yay...
 		git clone https://aur.archlinux.org/yay.git
@@ -148,16 +148,28 @@ install_stuff(){
 
 		echo Installing stuff from AUR...
 		sudo -u $USERNAME yay -S --noconfirm --needed \
-		libinput-gestures \
-		brillo \
-		otf-nerd-fonts-fira-code
+		nerd-fonts-fira-code
 		# flat-remix-git \
 		# universal-ctags-git \
-		
-		gpasswd -a $USERNAME input
-		sudo -u $USERNAME libinput-gestures-setup autostart
-		sudo -u $USERNAME libinput-gestures-setup start
 
+		if [ -z "$WIFI"] then
+			:
+		else
+			pacman -S --noconfirm --needed\
+			connman \
+			wpa_supplicant
+
+			yay -S --noconfirm --needed
+			libinput-gestures \
+			brillo
+			# doesn't work, see https://superuser.com/questions/688733/start-a-systemd-service-inside-chroot
+			# systemctl enable connman
+
+			gpasswd -a $USERNAME input
+			sudo -u $USERNAME libinput-gestures-setup autostart
+			sudo -u $USERNAME libinput-gestures-setup start
+		fi
+		
 		sudo -u $USERNAME git config --global credential.helper /usr/lib/git-core/git-credential-libsecret
 }
 

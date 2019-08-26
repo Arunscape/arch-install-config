@@ -21,10 +21,15 @@ USER_PASSWD=''
 # Canada/Mountain
 TIMEZONE=''
 
+# amd or intel
+CPU=''
+
 # Partition sizes
 BOOTSIZE=100M
 ROOTSIZE=30G
 SWAPSIZE=24G
+
+WIFI=''
 
 
 # right now, I default to Canadian English locales
@@ -91,6 +96,28 @@ setup(){
        	#   echo 'Enter your keymap'
         #   read KEYMAP
         #fi
+
+	if [ -z "$CPU" ]
+		while true
+		do
+			echo "type amd or intel (all lowercase, exactly as you see on the left) "
+			read passwdconfirmation
+
+			if [ "$CPU" == "amd" ] || [ "$CPU" == "intel"]
+        		then
+       	   			echo Installing for $CPU...
+				break
+
+			else
+				echo Type either amd or intel exactly
+			fi
+		done
+
+	if [ -z "$WIFI" ]
+	then
+		echo 'Do you need wifi? If not, just hit enter. If you do, type anything then hit enter'
+		read WIFI
+	fi
 }
 
 format(){
@@ -172,7 +199,7 @@ chroot_step(){
 	genfstab -U /mnt >> /mnt/etc/fstab
 	curl -Lo /mnt/install.sh https://raw.githubusercontent.com/Arunscape/arch-install-config/master/install-scripts/02-chroot.sh
 	chmod +x /mnt/install.sh
-	arch-chroot /mnt bash install.sh $USERNAME $USER_PASSWD $HOST_NAME $TIMEZONE $DRIVE
+	arch-chroot /mnt bash install.sh $USERNAME $USER_PASSWD $HOST_NAME $TIMEZONE $DRIVE $CPU $WIFI
 }
 
 # copy_configs(){

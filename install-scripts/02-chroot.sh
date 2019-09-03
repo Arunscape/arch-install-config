@@ -131,6 +131,7 @@ install_stuff(){
 clone_configs(){
     cd /home/$USERNAME
     sudo -u $USERNAME git clone https://github.com/Arunscape/dotfiles.git
+    sudo -u $USERNAME git remote set-url origin git@github.com:Arunscape/dotfiles.git
 }
 
 setup

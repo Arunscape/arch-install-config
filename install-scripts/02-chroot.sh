@@ -122,7 +122,7 @@ install_stuff(){
     then
         :
     else
-        pacman -S --noconfirm --needed\
+        pacman -S --noconfirm --needed \
         connman \
         wpa_supplicant
     fi
@@ -131,6 +131,7 @@ install_stuff(){
 clone_configs(){
     cd /home/$USERNAME
     sudo -u $USERNAME git clone https://github.com/Arunscape/dotfiles.git
+    cd dotfiles
     sudo -u $USERNAME git remote set-url origin git@github.com:Arunscape/dotfiles.git
 }
 

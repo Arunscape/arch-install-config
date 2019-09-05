@@ -123,7 +123,7 @@ install_stuff(){
         :
     else
         pacman -S --noconfirm --needed \
-        connman \
+        networkmanager \
         wpa_supplicant
     fi
 }

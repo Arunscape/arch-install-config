@@ -44,7 +44,7 @@ editor no
 auto-entries 0
 EOF
     
-    local rootpart="$DRIVE"p2
+    local rootpart="$DRIVE"2
     diskuuid=$(blkid -s PARTUUID -o value $rootpart)
 	cat > boot/loader/entries/arch.conf << EOF
 title   Arch Linux
@@ -107,7 +107,9 @@ install_stuff(){
     git \
     $CPU-ucode \
     linux-headers \
-    linux-lts
+    linux \
+    linux-lts \
+    linux-firmware
     
     
     echo Installing yay...

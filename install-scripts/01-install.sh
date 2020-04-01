@@ -21,7 +21,7 @@ TIMEZONE=''
 CPU=''
 
 # Partition sizes
-BOOTSIZE=100M
+BOOTSIZE=256M
 ROOTSIZE=30G
 SWAPSIZE=24G
 
@@ -33,38 +33,25 @@ WIFI=''
 
 setup(){
     
-    if [ -z "$DRIVE" ]
-    then
+    [ -z "$DRIVE" ] && (
         echo 'Enter the drive to install Arch to:'
-        read DRIVE
-    fi
+        read DRIVE)
     echo Installing Arch to: $DRIVE
     
-    if [ -z "$HOST_NAME" ]
-    then
+    [ -z "$HOST_NAME" ] && (
         echo 'Enter your desired hostname:'
-        read HOST_NAME
-    fi
+        read HOST_NAME)
     echo Hostname: $HOST_NAME
     
-    #if [ -z "$ROOT_PASSWD" ]
-    #then
-    #   echo 'Enter the root password:'
-    #   read ROOT_PASSWORD
-    #fi
-    
-    if [ -z "$USERNAME" ]
-    then
+    [ -z "$USERNAME" ] && (
         echo 'Enter your username:'
-        read USERNAME
-    fi
+        read USERNAME)
     echo Username: $USERNAME
     
-    if [ -z "$USER_PASSWD" ]
-    then
+    [ -z "$USER_PASSWD" ] && (
         echo 'Enter your password:'
-        read USER_PASSWD
-    fi
+        read USER_PASSWD)
+
     while true
     do
         echo "Confirm your password: "
@@ -80,11 +67,9 @@ setup(){
         fi
     done
     
-    if [ -z "$TIMEZONE" ]
-    then
+    [ -z "$TIMEZONE" ] && (
         echo 'Enter your timezone'
-        read TIMEZONE
-    fi
+        read TIMEZONE)
     echo Timezone: $TIMEZONE
     
     #if [ -z "$KEYMAP" ]
@@ -110,11 +95,9 @@ setup(){
             fi
         done
     fi
-    if [ -z "$WIFI" ]
-    then
+    [ -z "$WIFI" ] && (
         echo 'Do you need wifi? If not, just hit enter. If you do, type anything then hit enter'
-        read WIFI
-    fi
+        read WIFI)
 }
 
 format(){

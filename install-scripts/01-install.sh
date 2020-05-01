@@ -1,9 +1,3 @@
-# begin debug
-echo "Press CTRL+C to proceed."
-trap "pkill -f 'sleep 1h'" INT
-trap "set +x ; sleep 1h ; set -x" DEBUG
-# end debug
-
 # variables
 # Edit these variables or leave them blank to be prompted during setup
 
@@ -200,9 +194,7 @@ install_stuff(){
     linux-zen-headers \
     linux-firmware \
     btrfs-progs \
-    refind-efi \
-    nvim
-    
+    refind-efi
     
     echo Installing yay...
     git clone https://aur.archlinux.org/yay.git
@@ -238,7 +230,6 @@ use_graphics_for windows          # Specify the simpler "mac-style" behaviour
 also_scan_dirs   +,@/             # Search for boot loaders in the specified directory  
 EOF
 
-    nvim /boot/refind_linux.conf
 }
 
 clone_configs(){

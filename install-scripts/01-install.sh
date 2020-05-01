@@ -235,7 +235,7 @@ HOOKS="base systemd sd-vconsole modconf keyboard block filesystems btrfs sd-encr
 EOF
 
     mkinitcpio -p linux
-    refind-install
+    refind-install --usedefault /dev/disk/by-partlabel/EFI --alldrivers
 
     cat > /boot/EFI/refind/refind.conf << EOF
 timeout          5                # Timeout how long ReFind wait for user input

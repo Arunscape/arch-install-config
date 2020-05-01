@@ -14,16 +14,10 @@ USER_PASSWD=''
 
 # examples:
 # America/New_York
-# Canada/Mountain
 TIMEZONE=''
 
 # amd or intel
 CPU=''
-
-# Partition sizes
-BOOTSIZE=256M
-ROOTSIZE=30G
-SWAPSIZE=24G
 
 WIFI=''
 
@@ -103,57 +97,35 @@ setup(){
 format(){
     read -p "$(tput bold)$(tput setaf 1)WARNING this will wipe $DRIVE Press ENTER to continue, or Ctrl+C to exit$(tput sgr 0)"
     
-    # for some reason, fdisk still detects filesystem signatures
-    # wipefs -af $DRIVE
+    sgdisk --zap-all $DRIVE
+
+    sgdisk --clear \
+         --new=1:0:+512MiB --typecode=1:ef00 --change-name=1:EFI \
+         --new=3:0:0       --typecode=3:8300 --change-name=3:cryptsystem \
+           $DRIVE
+
+    mkfs.fat -F32 -n EFI /dev/disk/by-partlabel/EFI
+
+    cryptsetup luksFormat --align-payload=8192 -s 256 -c aes-xts-plain64 /dev/disk/by-partlabel/cryptsystem
+
+    cryptsetup open /dev/disk/by-partlabel/cryptsystem system
+
+    o=defaults,x-mount.mkdir
+    o_btrfs=$o,compress=lzo,ssd,noatime
     
-    # for ssd
-    blkdiscard $DRIVE
-    
-    # use fdisk to partition drives
-    (
-        echo g           # create GPT partition table
-        echo n           # create /boot partision
-        echo             # accept default partition number 1
-        echo             # accept default first sector
-        echo +$BOOTSIZE  # EFI partition is 100M
-        echo t           # change partition type to EFI
-        echo 1           #
-        echo n           # root partition, 32G
-        echo             #
-        echo             #
-        echo +$ROOTSIZE   #
-        echo n           # SWAP partition, 24G
-        echo             #
-        echo             #
-        echo +$SWAPSIZE  #
-        echo n           # /home parition, fill rest of disk
-        echo             #
-        echo             #
-        echo             #
-        echo p           # show what's going to be done
-        echo w           # write changes
-        echo q           # quit fdisk
-    ) | fdisk $DRIVE
-    
-    
-    local bootpart="$DRIVE"1
-    local rootpart="$DRIVE"2
-    local swappart="$DRIVE"3
-    local homepart="$DRIVE"4
-    
-    # format partitions
-    mkfs.fat $bootpart  # /boot
-    mkfs.ext4 $rootpart # /
-    mkswap $swappart    # SWAP
-    swapon $swappart    #
-    mkfs.ext4 $homepart # /home
-    
-    #mount the partitions
-    mount $rootpart /mnt
+    mount -t btrfs LABEL=system /mnt
+    btrfs subvolume create /mnt/root
+    btrfs subvolume create /mnt/home
+    btrfs subvolume create /mnt/snapshots
+    umount -R /mnt
+
+    mount -t btrfs -o subvol=root,$o_btrfs LABEL=system /mnt
+    mount -t btrfs -o subvol=home,$o_btrfs LABEL=system /mnt/home
+    mount -t btrfs -o subvol=snapshots,$o_btrfs LABEL=system /mnt/.snapshots
+
     mkdir /mnt/boot
-    mkdir /mnt/home
-    mount $bootpart /mnt/boot
-    mount $homepart /mnt/home
+    mount LABEL=EFI /mnt/boot
+
 }
 
 

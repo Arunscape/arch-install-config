@@ -12,6 +12,8 @@ setup(){
     
     echo Setting timezone...
     ln -sf /usr/share/zoneinfo/$TIMEZONE /etc/localtime
+    # NTP synchronization
+    timedatectl set-ntp 1
     
     echo running hwclock...
     hwclock --systohc
@@ -30,54 +32,6 @@ setup(){
     
     echo Generating locale...
     locale-gen
-    
-    # making directories if necessary
-    mkdir -p boot/loader/entries/
-    
-    # systemd
-    echo Setting up systemd-boot...
-    
-	cat > boot/loader/loader.conf << EOF
-default arch
-timeout 1
-editor no
-auto-entries 0
-EOF
-    
-    local rootpart="$DRIVE"2
-    diskuuid=$(blkid -s PARTUUID -o value $rootpart)
-	cat > boot/loader/entries/arch.conf << EOF
-title   Arch Linux
-linux   /vmlinuz-linux
-initrd  /$CPU-ucode.img
-initrd  /initramfs-linux.img
-options root=PARTUUID=$diskuuid rw
-EOF
-    
-	cat > boot/loader/entries/arch-lts.conf << EOF
-title   Arch Linux LTS Kernel
-linux   /vmlinuz-linux-lts
-initrd  /$CPU-ucode.img
-initrd  /initramfs-linux-lts.img
-options root=PARTUUID=$diskuuid rw
-EOF
-    
-    echo running bootctl install...
-    bootctl install
-    
-    # hook to run bootctl update whenever systemd is updated
-    mkdir -p /etc/pacman.d/hooks
-	cat > /etc/pacman.d/hooks/systemd-boot.hook << EOF
-[Trigger]
-Type = Package
-Operation = Upgrade
-Target = systemd
-
-[Action]
-Description = Updating systemd-boot
-When = PostTransaction
-Exec = /usr/bin/bootctl update
-EOF
     
     # add user
     echo Creating user $USERNAME
@@ -106,10 +60,16 @@ install_stuff(){
     pacman -S --noconfirm --needed \
     git \
     $CPU-ucode \
-    linux-headers \
     linux \
+    linux-headers \
     linux-lts \
-    linux-firmware
+    linux-lts-headers \
+    linux-zen \
+    linux-zen-headers \
+    linux-firmware \
+    btrfs-progs \
+    refind-efi \
+    nvim
     
     
     echo Installing yay...
@@ -128,6 +88,25 @@ install_stuff(){
         networkmanager \
         wpa_supplicant
     fi
+
+    cat > /etc/mkinitcpio.conf << EOF
+MODULES=""
+BINARIES=""
+FILES=""
+HOOKS="base systemd sd-vconsole modconf keyboard block filesystems btrfs sd-encrypt fsck"
+EOF
+
+    mkinitcpio -p linux
+    refind-install
+
+    cat > /etc/mkinitcpio.conf << EOF
+timeout          5                # Timeout how long ReFind wait for user input
+#include         themes/rEFInd-   # For theming ReFind uncomment this and fill in the right location of your theme
+use_graphics_for windows          # Specify the simpler "mac-style" behaviour
+also_scan_dirs   +,@/             # Search for boot loaders in the specified directory  
+EOF
+
+    nvim /boot/refind_linux.conf
 }
 
 clone_configs(){

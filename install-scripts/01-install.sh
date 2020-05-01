@@ -137,6 +137,17 @@ post_pacstrap(){
     # so that linux auto mounts /root /boot /home
     genfstab -U /mnt >> /mnt/etc/fstab
     
+    echo pts/0 >> /mnt/etc/securetty
+    echo pts/1 >> /mnt/etc/securetty
+    echo pts/2 >> /mnt/etc/securetty
+    echo pts/3 >> /mnt/etc/securetty
+    echo pts/4 >> /mnt/etc/securetty
+    echo pts/5 >> /mnt/etc/securetty
+    echo pts/6 >> /mnt/etc/securetty
+    echo pts/7 >> /mnt/etc/securetty
+    echo pts/8 >> /mnt/etc/securetty
+    echo pts/9>> /mnt/etc/securetty
+    
     systemd-nspawn -bD /mnt
     
     echo Setting timezone...

@@ -146,7 +146,7 @@ post_pacstrap(){
     echo pts/6 >> /mnt/etc/securetty
     echo pts/7 >> /mnt/etc/securetty
     echo pts/8 >> /mnt/etc/securetty
-    echo pts/9>> /mnt/etc/securetty
+    echo pts/9 >> /mnt/etc/securetty
     
     systemd-nspawn -bD /mnt
     

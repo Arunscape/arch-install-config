@@ -231,7 +231,7 @@ EOF
     mkinitcpio -p linux
     refind-install
 
-    cat > /boot/refind_config.conf << EOF
+    cat > /boot/EFI/refind/refind.conf << EOF
 timeout          5                # Timeout how long ReFind wait for user input
 #include         themes/rEFInd-   # For theming ReFind uncomment this and fill in the right location of your theme
 use_graphics_for windows          # Specify the simpler "mac-style" behaviour

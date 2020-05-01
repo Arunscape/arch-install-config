@@ -1,3 +1,9 @@
+# begin debug
+echo "Press CTRL+C to proceed."
+trap "pkill -f 'sleep 1h'" INT
+trap "set +x ; sleep 1h ; set -x" DEBUG
+# end debug
+
 # variables
 # Edit these variables or leave them blank to be prompted during setup
 
@@ -42,12 +48,10 @@ setup(){
         read USERNAME)
     echo Username: $USERNAME
     
-    [ -z "$USER_PASSWD" ] && (
-        echo 'Enter your password:'
-        read USER_PASSWD)
-
     while true
     do
+        echo 'Enter your password:'
+        read USER_PASSWD
         echo "Confirm your password: "
         read passwdconfirmation
         
@@ -128,19 +132,16 @@ format(){
 
 }
 
-
 run_pacstrap(){
     pacman -Syy
     pacstrap /mnt base base-devel
 }
 
-chroot_step(){
+post_pacstrap(){
     
     # so that linux auto mounts /root /boot /home
     genfstab -U /mnt >> /mnt/etc/fstab
-    curl -Lo /mnt/install.sh https://raw.githubusercontent.com/Arunscape/arch-install-config/master/install-scripts/02-chroot.sh
-    chmod +x /mnt/install.sh
-    arch-chroot /mnt bash install.sh $USERNAME $USER_PASSWD $HOST_NAME $TIMEZONE $DRIVE $CPU $WIFI
+    
 }
 
 finish(){
@@ -154,5 +155,5 @@ finish(){
 setup
 format
 run_pacstrap
-chroot_step
+post_pacstrap
 finish

@@ -136,6 +136,9 @@ post_pacstrap(){
     
     # so that linux auto mounts /root /boot /home
     genfstab -U /mnt >> /mnt/etc/fstab
+    
+    systemd-nspawn -bD /mnt
+    
     echo Setting timezone...
     ln -sf /usr/share/zoneinfo/$TIMEZONE /etc/localtime
     # NTP synchronization

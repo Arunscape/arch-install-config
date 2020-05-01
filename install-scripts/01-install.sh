@@ -113,7 +113,8 @@ format(){
     cryptsetup luksFormat --align-payload=8192 -s 256 -c aes-xts-plain64 /dev/disk/by-partlabel/cryptsystem
 
     cryptsetup open /dev/disk/by-partlabel/cryptsystem system
-
+    
+    mkfs.btrfs --force --label system /dev/mapper/system
     o=defaults,x-mount.mkdir
     o_btrfs=$o,compress=lzo,ssd,noatime
     

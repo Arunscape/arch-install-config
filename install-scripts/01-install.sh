@@ -138,23 +138,10 @@ post_pacstrap(){
     # so that linux auto mounts /root /boot /home
     genfstab -U /mnt >> /mnt/etc/fstab
     
-    echo pts/0 >> /mnt/etc/securetty
-    echo pts/1 >> /mnt/etc/securetty
-    echo pts/2 >> /mnt/etc/securetty
-    echo pts/3 >> /mnt/etc/securetty
-    echo pts/4 >> /mnt/etc/securetty
-    echo pts/5 >> /mnt/etc/securetty
-    echo pts/6 >> /mnt/etc/securetty
-    echo pts/7 >> /mnt/etc/securetty
-    echo pts/8 >> /mnt/etc/securetty
-    echo pts/9 >> /mnt/etc/securetty
-    
-    systemd-nspawn -bD /mnt
-    
     echo Setting timezone...
     ln -sf /usr/share/zoneinfo/$TIMEZONE /etc/localtime
     # NTP synchronization
-    timedatectl set-ntp 1
+    # timedatectl set-ntp 1
     
     echo running hwclock...
     hwclock --systohc
@@ -208,8 +195,7 @@ install_stuff(){
     linux-zen \
     linux-zen-headers \
     linux-firmware \
-    btrfs-progs \
-    refind-efi
+    btrfs-progs
     
     echo Installing yay...
     git clone https://aur.archlinux.org/yay.git
@@ -236,14 +222,48 @@ HOOKS="base systemd sd-vconsole modconf keyboard block filesystems btrfs sd-encr
 EOF
 
     mkinitcpio -p linux
-    refind-install --usedefault /dev/disk/by-partlabel/EFI --alldrivers
-
-    cat > /boot/EFI/refind/refind.conf << EOF
-timeout          5                # Timeout how long ReFind wait for user input
-#include         themes/rEFInd-   # For theming ReFind uncomment this and fill in the right location of your theme
-use_graphics_for windows          # Specify the simpler "mac-style" behaviour
-also_scan_dirs   +,@/             # Search for boot loaders in the specified directory  
+    
+    diskuuid=$(blkid -s PARTUUID -o value /dev/disk/by-partlabel/cryptsystem)
+    
+    cat > boot/loader/entries/arch.conf << EOF
+title   Arch Linux
+linux   /vmlinuz-linux
+initrd  /$CPU-ucode.img
+initrd  /initramfs-linux.img
+options cryptdevice=UUID={$diskuuid}:volume root=/dev/disk/by-partlabel/cryptsystem quiet rw
 EOF
+    
+    cat > boot/loader/entries/arch-lts.conf << EOF
+title   Arch Linux LTS Kernel
+linux   /vmlinuz-linux-lts
+initrd  /$CPU-ucode.img
+initrd  /initramfs-linux-lts.img
+options cryptdevice=UUID={$diskuuid}:volume root=/dev/disk/by-partlabel/cryptsystem quiet rw
+EOF
+
+    cat > boot/loader/entries/arch-zen.conf << EOF
+title   Arch Linux Zen Kernel
+linux   /vmlinuz-linux-zen
+initrd  /$CPU-ucode.img
+initrd  /initramfs-linux-zen.img
+options cryptdevice=UUID={$diskuuid}:volume root=/dev/disk/by-partlabel/cryptsystem quiet rw
+EOF
+    
+    bootctl --path=/boot/ install
+    
+    # hook to run bootctl update whenever systemd is updated
+    mkdir -p /etc/pacman.d/hooks
+	cat > /etc/pacman.d/hooks/systemd-boot.hook << EOF
+[Trigger]
+Type = Package
+Operation = Upgrade
+Target = systemd
+[Action]
+Description = Updating systemd-boot
+When = PostTransaction
+Exec = /usr/bin/bootctl update
+EOF
+    
 
 }
 

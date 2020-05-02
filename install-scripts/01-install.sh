@@ -132,6 +132,8 @@ pacstrap /mnt base base-devel
 # so that linux auto mounts /root /boot /home
 genfstab -U /mnt >> /mnt/etc/fstab
 
+arch-chroot /mnt /bin/bash
+
 echo Setting timezone...
 ln -sf /usr/share/zoneinfo/$TIMEZONE /etc/localtime
 # NTP synchronization

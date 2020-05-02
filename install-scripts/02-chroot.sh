@@ -62,7 +62,9 @@ linux-zen \
 linux-zen-headers \
 linux-firmware \
 btrfs-progs \
-grub
+grub \
+lvm2 \
+efibootmgr
 
 echo Installing yay...
 git clone https://aur.archlinux.org/yay.git
@@ -88,10 +90,14 @@ FILES=""
 HOOKS=(base systemd autodetect keyboard sd-vconsole modconf block sd-encrypt sd-lvm2 filesystems btrfs fsck)
 EOF
 
+echo KEYMAP=us >> /etc/vconsole.conf
+
 mkinitcpio -p linux
     
-#diskuuid=$(blkid -s PARTUUID -o value /dev/disk/by-partlabel/cryptsystem)
+diskuuid=$(blkid -s PARTUUID -o value /dev/disk/by-partlabel/cryptsystem)
 
 echo 'GRUB_ENABLE_CRYPTODISK=y' >> /etc/default/grub
+
+# GRUB_CMDLINE_LINUX="... rd.luks.name=device-UUID=cryptlvm ..."
 grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB
 exit

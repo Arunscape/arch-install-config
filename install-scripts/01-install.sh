@@ -216,9 +216,10 @@ EOF
 
 mkinitcpio -p linux
     
-diskuuid=$(blkid -s PARTUUID -o value /dev/disk/by-partlabel/cryptsystem)
+#diskuuid=$(blkid -s PARTUUID -o value /dev/disk/by-partlabel/cryptsystem)
 
-#TODO install grub
+echo 'GRUB_ENABLE_CRYPTODISK=y' >> /etc/default/grub
+grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB
 
 clone_configs(){
     cd /home/$USERNAME
@@ -229,7 +230,6 @@ clone_configs(){
 
 finish(){
     # exit and reboot
-    rm /mnt/install.sh
     umount -R /mnt
     echo "$(tput bold)$(tput setaf 2)Done!!!$(tput sgr 0)"
     # reboot

@@ -51,7 +51,6 @@ sed -i "s/^#Color/Color/" /etc/pacman.conf
 sed -i "/^Color/a ILoveCandy" /etc/pacman.conf
     
 
-
 pacman -S --noconfirm --needed \
 git \
 $CPU-ucode \
@@ -95,20 +94,4 @@ mkinitcpio -p linux
 
 echo 'GRUB_ENABLE_CRYPTODISK=y' >> /etc/default/grub
 grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB
-
-clone_configs(){
-    cd /home/$USERNAME
-    sudo -u $USERNAME git clone https://github.com/Arunscape/dotfiles.git
-    cd dotfiles
-    sudo -u $USERNAME git remote set-url origin git@github.com:Arunscape/dotfiles.git
-}
-
-finish(){
-    # exit and reboot
-    umount -R /mnt
-    echo "$(tput bold)$(tput setaf 2)Done!!!$(tput sgr 0)"
-    # reboot
-}
-
-clone_configs
-finish
+exit

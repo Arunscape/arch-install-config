@@ -131,8 +131,9 @@ pacstrap /mnt base base-devel
     
 # so that linux auto mounts /root /boot /home
 genfstab -U /mnt >> /mnt/etc/fstab
-
-arch-chroot /mnt /bin/bash
+curl -Lo /mnt/install.sh https://raw.githubusercontent.com/Arunscape/arch-install-config/master/install-scripts/02-chroot.sh
+chmod +x /mnt/install.sh
+arch-chroot /mnt bash install.sh $USERNAME $USER_PASSWD $HOST_NAME $TIMEZONE $DRIVE $CPU $WIFI
 
 echo Setting timezone...
 ln -sf /usr/share/zoneinfo/$TIMEZONE /etc/localtime
@@ -232,6 +233,7 @@ clone_configs(){
 
 finish(){
     # exit and reboot
+    rm /mnt/install.sh
     umount -R /mnt
     echo "$(tput bold)$(tput setaf 2)Done!!!$(tput sgr 0)"
     # reboot

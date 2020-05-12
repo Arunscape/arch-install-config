@@ -103,7 +103,7 @@ sgdisk --clear \
 
 mkfs.fat -F32 -n EFI /dev/disk/by-partlabel/EFI
 
-cryptsetup luksFormat --align-payload=8192 -s 256 -c aes-xts-plain64 /dev/disk/by-partlabel/cryptsystem
+cryptsetup luksFormat --align-payload=8192 -s 256 -c aes-xts-plain64 --type luks1 /dev/disk/by-partlabel/cryptsystem
 
 cryptsetup open /dev/disk/by-partlabel/cryptsystem system
 

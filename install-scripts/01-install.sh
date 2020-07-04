@@ -14,7 +14,7 @@ USER_PASSWD=''
 
 # examples:
 # America/New_York
-TIMEZONE='America/Mountain'
+TIMEZONE='Canada/Mountain'
 
 # amd or intel
 CPU='intel'
@@ -103,7 +103,7 @@ sgdisk --clear \
 
 mkfs.fat -F32 -n EFI /dev/disk/by-partlabel/EFI
 
-cryptsetup luksFormat --align-payload=8192 -s 256 -c aes-xts-plain64 --type luks1 /dev/disk/by-partlabel/cryptsystem
+cryptsetup luksFormat -s 256 -c aes-xts-plain64 --type luks1 /dev/disk/by-partlabel/cryptsystem
 
 cryptsetup open /dev/disk/by-partlabel/cryptsystem system
 
@@ -127,7 +127,7 @@ mount LABEL=EFI /mnt/efi
 
 
 pacman -Syy
-pacstrap /mnt base base-devel
+pacstrap /mnt base base-devel btrfs-progs
 
     
 # so that linux auto mounts /root /boot /home

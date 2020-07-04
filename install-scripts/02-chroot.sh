@@ -83,8 +83,13 @@ else
     wpa_supplicant
 fi
 
+# early KMS
+# intel iGPU
+# MODULES=(i915)
+# amd gpu
+# MODULES=(amdgpu)
 cat > /etc/mkinitcpio.conf << EOF
-MODULES=""
+MODULES=(i915)
 BINARIES=(/usr/bin/btrfs)
 FILES=""
 HOOKS=(base systemd autodetect keyboard sd-vconsole modconf block sd-encrypt sd-lvm2 filesystems btrfs fsck)

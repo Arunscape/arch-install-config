@@ -76,7 +76,7 @@ then
 else
     pacman -S --noconfirm --needed \
     iwd \
-    connmanctl
+    connman
 fi
 
 # early KMS
@@ -101,7 +101,7 @@ diskuuid=$(blkid -s PARTUUID -o value /dev/disk/by-partlabel/cryptsystem)
 uuid=$(blkid -s PTUUID -o value /dev/sda)
 
 echo 'GRUB_ENABLE_CRYPTODISK=y' >> /etc/default/grub
-echo "GRUB_CMDLINE_LINUX=\"cryptdevice=UUID=$uuid:root\""
+echo "GRUB_CMDLINE_LINUX=\"cryptdevice=UUID=$uuid:root\"" >> /etc/default/grub
 
 # GRUB_CMDLINE_LINUX="... rd.luks.name=device-UUID=cryptlvm ..."
 grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB --recheck

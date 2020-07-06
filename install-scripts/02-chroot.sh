@@ -98,7 +98,7 @@ mkinitcpio -p linux
 diskuuid=$(blkid -s PARTUUID -o value /dev/disk/by-partlabel/cryptsystem)
 
 # TODO change
-uuid=$(blkid /dev/sda)
+uuid=$(blkid -s PTUUID -o value /dev/sda)
 
 echo 'GRUB_ENABLE_CRYPTODISK=y' >> /etc/default/grub
 echo "GRUB_CMDLINE_LINUX=\"cryptdevice=UUID=$uuid:root\""

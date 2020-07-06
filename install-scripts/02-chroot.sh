@@ -53,18 +53,14 @@ sed -i "/^Color/a ILoveCandy" /etc/pacman.conf
 
 pacman -S --noconfirm --needed \
 git \
-$CPU-ucode \
 linux \
 linux-headers \
 linux-lts \
 linux-lts-headers \
 linux-zen \
 linux-zen-headers \
-linux-firmware \
-btrfs-progs \
-grub \
-lvm2 \
-efibootmgr
+linux-firmware
+
 
 echo Installing yay...
 git clone https://aur.archlinux.org/yay.git
@@ -79,8 +75,8 @@ then
     :
 else
     pacman -S --noconfirm --needed \
-    networkmanager \
-    wpa_supplicant
+    iwd \
+    connmanctl
 fi
 
 # early KMS
@@ -92,7 +88,7 @@ cat > /etc/mkinitcpio.conf << EOF
 MODULES=(i915)
 BINARIES=(/usr/bin/btrfs)
 FILES=""
-HOOKS=(base systemd autodetect keyboard sd-vconsole modconf block sd-encrypt sd-lvm2 filesystems btrfs fsck)
+HOOKS=(base udev systemd autodetect keyboard sd-vconsole modconf block sd-encrypt filesystems btrfs fsck)
 EOF
 
 echo KEYMAP=us >> /etc/vconsole.conf
@@ -101,8 +97,12 @@ mkinitcpio -p linux
     
 diskuuid=$(blkid -s PARTUUID -o value /dev/disk/by-partlabel/cryptsystem)
 
+# TODO change
+uuid=$(blkid /dev/sda)
+
 echo 'GRUB_ENABLE_CRYPTODISK=y' >> /etc/default/grub
+echo "GRUB_CMDLINE_LINUX=\"cryptdevice=UUID=$uuid:root\""
 
 # GRUB_CMDLINE_LINUX="... rd.luks.name=device-UUID=cryptlvm ..."
-grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB
+grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB --recheck
 exit

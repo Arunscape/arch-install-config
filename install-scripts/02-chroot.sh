@@ -101,7 +101,7 @@ diskuuid=$(blkid -s PARTUUID -o value /dev/disk/by-partlabel/cryptsystem)
 uuid=$(blkid -s PTUUID -o value /dev/sda)
 
 echo 'GRUB_ENABLE_CRYPTODISK=y' >> /etc/default/grub
-echo "GRUB_CMDLINE_LINUX=\"rd.luks.name=$uuid=cryptroot root=/dev/mapper/cryptroot\"" >> /etc/default/grub
+echo "GRUB_CMDLINE_LINUX=\"rd.luks.name=$uuid=cryptsystem root=/dev/mapper/cryptsystem\"" >> /etc/default/grub
 
 # GRUB_CMDLINE_LINUX="... rd.luks.name=device-UUID=cryptlvm ..."
 grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB --recheck

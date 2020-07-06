@@ -13,7 +13,7 @@ ln -sf /usr/share/zoneinfo/$TIMEZONE /etc/localtime
 # timedatectl set-ntp 1
 
 echo running hwclock...
-hwclock --systohc
+hwclock --systohc --utc
 
 echo Setting hostname...
 echo $HOST_NAME > /etc/hostname
@@ -101,7 +101,7 @@ diskuuid=$(blkid -s PARTUUID -o value /dev/disk/by-partlabel/cryptsystem)
 uuid=$(blkid -s PTUUID -o value /dev/sda)
 
 echo 'GRUB_ENABLE_CRYPTODISK=y' >> /etc/default/grub
-echo "GRUB_CMDLINE_LINUX=\"cryptdevice=UUID=$uuid:root\"" >> /etc/default/grub
+echo "GRUB_CMDLINE_LINUX=\"rd.luks.name=$uuid=cryptroot root=/dev/mapper/cryptroot\"" >> /etc/default/grub
 
 # GRUB_CMDLINE_LINUX="... rd.luks.name=device-UUID=cryptlvm ..."
 grub-install --target=x86_64-efi --efi-directory=/efi --bootloader-id=GRUB --recheck

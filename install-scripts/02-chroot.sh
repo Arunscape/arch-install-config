@@ -39,7 +39,7 @@ title   Arch Linux
 linux   /vmlinuz-linux
 initrd  /$CPU-ucode.img
 initrd  /initramfs-linux.img
-options root=/dev/mapper/system rd.luks.name=$diskuuid=system
+options root=/dev/mapper/system rd.luks.name=$diskuuid=system rootflags=subvol=@ rw
 EOF
 
 cat > boot/loader/entries/arch-lts.conf << EOF
@@ -47,7 +47,7 @@ title   Arch Linux LTS
 linux   /vmlinuz-linux-lts
 initrd  /$CPU-ucode.img
 initrd  /initramfs-linux-lts.img
-options root=/dev/mapper/system rd.luks.name=$diskuuid=system
+options root=/dev/mapper/system rd.luks.name=$diskuuid=system rootflags=subvol=@ rw
 EOF
 
 cat > boot/loader/entries/arch-lts.conf << EOF
@@ -55,7 +55,7 @@ title   Arch Linux Zen
 linux   /vmlinuz-linux-zen
 initrd  /$CPU-ucode.img
 initrd  /initramfs-linux-zen.img
-options root=/dev/mapper/system rd.luks.name=$diskuuid=system
+options root=/dev/mapper/system rd.luks.name=$diskuuid=system rootflags=subvol=@ rw
 EOF
 
 bootctl install

@@ -40,7 +40,7 @@ sgdisk --clear \
 mkfs.fat -F32 -n EFI /dev/disk/by-partlabel/EFI
 
 cryptsetup luksFormat \
-        --hash argon2id
+        --pbkdf argon2id \
         --key-size 512 \
         --cipher aes-xts-plain64 \
         --type luks2 \
@@ -79,10 +79,8 @@ mkdir /mnt/boot
 mkdir /mnt/efi
 mount LABEL=EFI /mnt/efi
 
-genfstab -U /mnt >> /mnt/etc/fstab
 sed -i "s/^#Color/Color/" /etc/pacman.conf
 sed -i "/^Color/a ILoveCandy" /etc/pacman.conf
-
 
 pacman -Syy
 pacstrap /mnt base base-devel \
@@ -116,6 +114,7 @@ pacstrap /mnt base base-devel \
 
 
 
+genfstab -U /mnt >> /mnt/etc/fstab
 curl -Lo /mnt/install.sh https://raw.githubusercontent.com/Arunscape/arch-install-config/master/install-scripts/02-chroot.sh
 chmod +x /mnt/install.sh
 arch-chroot /mnt bash install.sh $USERNAME $DRIVE $CPU $GPU $WIFI

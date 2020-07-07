@@ -58,6 +58,19 @@ initrd  /initramfs-linux-zen.img
 options root=/dev/mapper/system rd.luks.name=$diskuuid=system
 EOF
 
+bootctl install
+mkdir -p /etc/pacman.d/hooks
+cat > /etc/pacman.d/hooks/systemd-boot.hook << EOF
+[Trigger]
+Type = Package
+Operation = Upgrade
+Target = systemd
+[Action]
+Description = Updating systemd-boot
+When = PostTransaction
+Exec = /usr/bin/bootctl update
+EOF
+
 if [ -z "$WIFI"]
 then
     :

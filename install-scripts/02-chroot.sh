@@ -71,7 +71,7 @@ When = PostTransaction
 Exec = /usr/bin/bootctl update
 EOF
 
-if [ -z "$WIFI"]
+if [ -z "$WIFI" ]
 then
     :
 else
@@ -81,7 +81,7 @@ else
 fi
 
 # early KMS
-if ["$GPU" == "intel"]
+if [ "$GPU" == "intel" ]
 then
     cat > /etc/mkinitcpio.conf << EOF
 MODULES=(i915)
@@ -90,7 +90,7 @@ FILES=""
 HOOKS=(base udev systemd autodetect keyboard sd-vconsole modconf block sd-encrypt filesystems btrfs fsck)
 EOF
     
-else if ["$GPU" == "amd"]
+else if [ "$GPU" == "amd" ]
 then
     cat > /etc/mkinitcpio.conf << EOF
 MODULES=(amdgpu)

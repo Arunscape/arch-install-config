@@ -21,7 +21,7 @@ sed -i "/^Color/a ILoveCandy" /etc/pacman.conf
 
 hwclock --systohc --utc
 locale-gen
-useradd -m -g wheel $USERNAME
+useradd -m -g wheel -s /usr/bin/fish $USERNAME
 usermod -p '!' root
 
 mkdir -p /boot/loader/entries/
@@ -39,7 +39,7 @@ title   Arch Linux
 linux   /vmlinuz-linux
 initrd  /$CPU-ucode.img
 initrd  /initramfs-linux.img
-options root=/dev/mapper/system rd.luks.name=$diskuuid=system rootflags=subvol=@ rw
+options root=/dev/mapper/system rd.luks.name=$diskuuid=system
 EOF
 
 cat > boot/loader/entries/arch-lts.conf << EOF
@@ -47,18 +47,18 @@ title   Arch Linux LTS
 linux   /vmlinuz-linux-lts
 initrd  /$CPU-ucode.img
 initrd  /initramfs-linux-lts.img
-options root=/dev/mapper/system rd.luks.name=$diskuuid=system rootflags=subvol=@ rw
+options root=/dev/mapper/system rd.luks.name=$diskuuid=system
 EOF
 
-cat > boot/loader/entries/arch-lts.conf << EOF
+cat > boot/loader/entries/arch-zen.conf << EOF
 title   Arch Linux Zen
 linux   /vmlinuz-linux-zen
 initrd  /$CPU-ucode.img
 initrd  /initramfs-linux-zen.img
-options root=/dev/mapper/system rd.luks.name=$diskuuid=system rootflags=subvol=@ rw
+options root=/dev/mapper/system rd.luks.name=$diskuuid=system
 EOF
 
-bootctl install
+bootctl install --path=/boot
 mkdir -p /etc/pacman.d/hooks
 cat > /etc/pacman.d/hooks/systemd-boot.hook << EOF
 [Trigger]
@@ -103,9 +103,12 @@ else
     ;
 fi
 
-    
-
-
+# install yay
+cd /tmp
+git clone https://aur.archlinux.org/yay.git
+chown -R nobody yay
+cd yay
+sudo -u nobody makepkg --noconfirm -si
 
 clone_configs(){
     cd /home/$USERNAME
@@ -114,12 +117,7 @@ clone_configs(){
     sudo -u $USERNAME git remote set-url origin git@github.com:Arunscape/dotfiles.git
 }
 
-git clone https://aur.archlinux.org/yay.git
-chmod 777 -R yay
-cd yay
-sudo -u $USERNAME makepkg --noconfirm -si
-cd ..
-rm -rf yay
+
 
 # uncomment to skip cloning dotfiles
 clone_configs

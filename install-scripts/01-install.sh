@@ -42,6 +42,7 @@ mkfs.fat -F32 -n EFI /dev/disk/by-partlabel/EFI
 cryptsetup luksFormat \
         --pbkdf argon2id \
         --key-size 512 \
+        --hash sha512 \
         --cipher aes-xts-plain64 \
         --type luks2 \
         --use-random \
@@ -76,8 +77,7 @@ mount -t btrfs -o subvol=@tmp,$o_btrfs LABEL=system /mnt/tmp
 mount -t btrfs -o subvol=@snapshots,$o_btrfs LABEL=system /mnt/.snapshots
 
 mkdir /mnt/boot
-mkdir /mnt/efi
-mount LABEL=EFI /mnt/efi
+mount LABEL=EFI /boot
 
 sed -i "s/^#Color/Color/" /etc/pacman.conf
 sed -i "/^Color/a ILoveCandy" /etc/pacman.conf

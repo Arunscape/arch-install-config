@@ -5,6 +5,7 @@ CPU=$3
 GPU=$4
 WIFI=$5
 
+set -e
 # NTP synchronization
 # but systemctl doesn't work in chroot
 # timedatectl set-ntp 1

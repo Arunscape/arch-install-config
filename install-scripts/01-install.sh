@@ -104,7 +104,7 @@ pacstrap /mnt base base-devel \
                     slurp \
                     p7zip \
                     noto-fonts \
-                    otf-fira-code \
+                    ttf-fira-code \
                     firefox-developer-edition \
                     vlc \
                     thefuck \

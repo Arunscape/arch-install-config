@@ -69,17 +69,11 @@ mount -t btrfs -o subvol=@,$o_btrfs LABEL=arch /mnt
 mount -t btrfs -o subvol=@home,$o_btrfs LABEL=arch /mnt/home
 mount -t btrfs -o subvol=@snapshots,$o_btrfs LABEL=arch /mnt/.snapshots
 
-mkdir -p /mnt/var/cache/pacman/pkg
+mkdir -p /mnt/var/cache/pacman/
 btrfs subvolume create /mnt/var/cache/pacman/pkg
-
-mkdir -p /var/abs
-btrfs subvolume create /var/abs
-
-mkdir -p /var/tmp
-btrfs subvolume create /var/tmp
-
-mkdir -p /srv
-btrfs subvolume create /srv
+btrfs subvolume create /mnt/var/abs
+btrfs subvolume create /mnt/var/tmp
+btrfs subvolume create /mnt/srv
 
 mkdir /mnt/boot
 mount LABEL=EFI /mnt/boot

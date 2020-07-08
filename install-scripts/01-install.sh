@@ -112,7 +112,8 @@ pacstrap /mnt base base-devel \
                     thefuck \
                     lsd \
                     sl \
-                    zathura
+                    zathura \
+                    zathura-pdf-poppler
 
 
 

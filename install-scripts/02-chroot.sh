@@ -34,13 +34,14 @@ editor no
 auto-entries 0
 EOF
 
-diskuuid=$(blkid -s PARTUUID -o value /dev/disk/by-partlabel/cryptsystem)
+diskuuid=$(blkid -s UUID -o value /dev/disk/by-partlabel/cryptsystem)
+partuuid=$(blkid -s PARTUUID -o value /dev/disk/by-partlabel/cryptsystem)
 cat > boot/loader/entries/arch.conf << EOF
 title   Arch Linux
 linux   /vmlinuz-linux
 initrd  /$CPU-ucode.img
 initrd  /initramfs-linux.img
-options root=/dev/mapper/system rd.luks.name=$diskuuid=system
+options root=UUID=$diskuuid rd.luks.name=$partuuid=system rw rootflags=subvol=@
 EOF
 
 cat > boot/loader/entries/arch-lts.conf << EOF
@@ -48,7 +49,7 @@ title   Arch Linux LTS
 linux   /vmlinuz-linux-lts
 initrd  /$CPU-ucode.img
 initrd  /initramfs-linux-lts.img
-options root=/dev/mapper/system rd.luks.name=$diskuuid=system
+options root=UUID=$diskuuid rd.luks.name=$partuuid=system rw rootflags=subvol=@
 EOF
 
 cat > boot/loader/entries/arch-zen.conf << EOF
@@ -56,7 +57,7 @@ title   Arch Linux Zen
 linux   /vmlinuz-linux-zen
 initrd  /$CPU-ucode.img
 initrd  /initramfs-linux-zen.img
-options root=/dev/mapper/system rd.luks.name=$diskuuid=system
+options root=UUID=$diskuuid rd.luks.name=$partuuid=system rw rootflags=subvol=@
 EOF
 
 bootctl install --path=/boot
@@ -101,7 +102,7 @@ HOOKS=(base udev systemd autodetect keyboard sd-vconsole modconf block sd-encryp
 EOF
 
 else
-    ;
+    :
 fi
 
 # install yay

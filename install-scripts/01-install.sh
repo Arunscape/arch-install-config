@@ -118,7 +118,7 @@ pacstrap /mnt base base-devel \
 
 
 
-genfstab -U /mnt >> /mnt/etc/fstab
+genfstab -L -p /mnt >> /mnt/etc/fstab
 curl -Lo /mnt/install.sh https://raw.githubusercontent.com/Arunscape/arch-install-config/master/install-scripts/02-chroot.sh
 chmod +x /mnt/install.sh
 arch-chroot /mnt bash install.sh $USERNAME $DRIVE $CPU $GPU $WIFI

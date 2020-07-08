@@ -89,7 +89,7 @@ then
 MODULES=(i915)
 BINARIES=(/usr/bin/btrfs)
 FILES=""
-HOOKS=(base udev systemd autodetect keyboard sd-vconsole modconf block sd-encrypt filesystems btrfs fsck)
+HOOKS=(base systemd autodetect keyboard sd-vconsole modconf block sd-encrypt filesystems btrfs fsck)
 EOF
     
 else if [ "$GPU" == "amd" ]
@@ -98,7 +98,7 @@ then
 MODULES=(amdgpu)
 BINARIES=(/usr/bin/btrfs)
 FILES=""
-HOOKS=(base udev systemd autodetect keyboard sd-vconsole modconf block sd-encrypt filesystems btrfs fsck)
+HOOKS=(base systemd autodetect keyboard sd-vconsole modconf block sd-encrypt filesystems btrfs fsck)
 EOF
 
 else

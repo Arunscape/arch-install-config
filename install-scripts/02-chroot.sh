@@ -90,20 +90,23 @@ MODULES=(i915)
 BINARIES=(/usr/bin/btrfs)
 FILES=""
 HOOKS=(base systemd autodetect keyboard sd-vconsole modconf block sd-encrypt filesystems btrfs fsck)
+COMPRESSION="lz4"
 EOF
     
-else if [ "$GPU" == "amd" ]
+elif [ "$GPU" == "amd" ]
 then
     cat > /etc/mkinitcpio.conf << EOF
 MODULES=(amdgpu)
 BINARIES=(/usr/bin/btrfs)
 FILES=""
 HOOKS=(base systemd autodetect keyboard sd-vconsole modconf block sd-encrypt filesystems btrfs fsck)
+COMPRESSION="lz4"
 EOF
 
 else
-    :
+    echo gpu is $GPU
 fi
+
 mkinitcpio -P
 
 # install yay

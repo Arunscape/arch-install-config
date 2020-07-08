@@ -114,13 +114,13 @@ cd /tmp
 git clone https://aur.archlinux.org/yay.git
 chown -R nobody yay
 cd yay
-sudo su nobody makepkg --noconfirm -si
+sudo su - nobody makepkg --noconfirm -si
 
 clone_configs(){
     cd /home/$USERNAME
-    sudo su $USERNAME git clone https://github.com/Arunscape/dotfiles.git
+    sudo su - $USERNAME git clone https://github.com/Arunscape/dotfiles.git
     cd dotfiles
-    sudo su $USERNAME git remote set-url origin git@github.com:Arunscape/dotfiles.git
+    sudo su - $USERNAME git remote set-url origin git@github.com:Arunscape/dotfiles.git
 }
 
 

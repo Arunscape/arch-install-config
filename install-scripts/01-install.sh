@@ -32,13 +32,14 @@ lsblk
 read -p "$(tput bold)$(tput setaf 1)WARNING this will wipe $DRIVE Press ENTER to continue, or Ctrl+C to exit$(tput sgr 0)"
 
 sgdisk --zap-all $DRIVE
-partx -v -a $DRIVE
 
+partprobe $DRIVE
 sgdisk --clear \
         --new=1:0:+512MiB --typecode=1:ef00 --change-name=1:EFI \
         --new=2:0:0       --typecode=2:8300 --change-name=2:cryptsystem \
         $DRIVE
 
+partprobe $DRIVE
 mkfs.fat -F32 -n EFI /dev/disk/by-partlabel/EFI
 
 cryptsetup luksFormat \

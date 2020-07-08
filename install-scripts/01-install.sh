@@ -52,32 +52,34 @@ cryptsetup luksFormat \
         --iter-time 5000 \
         /dev/disk/by-partlabel/cryptsystem
 
-cryptsetup open /dev/disk/by-partlabel/cryptsystem system
+cryptsetup open /dev/disk/by-partlabel/cryptsystem cryptroot
 
-mkfs.btrfs --force --label system /dev/mapper/system
+mkfs.btrfs --force --label arch /dev/mapper/cryptroot
 o=defaults,x-mount.mkdir
 o_btrfs=$o,compress=lzo,ssd,noatime,nodiratime
 
 # when doing snapshots, also include pacman cache under /var
-mount -t btrfs LABEL=system /mnt
+mount -t btrfs LABEL=arch /mnt
 btrfs subvolume create /mnt/@
 btrfs subvolume create /mnt/@home
-btrfs subvolume create /mnt/@log
-btrfs subvolume create /mnt/@srv
-btrfs subvolume create /mnt/@pkg
-btrfs subvolume create /mnt/@tmp
 btrfs subvolume create /mnt/@snapshots
 umount -R /mnt
 
-mount -t btrfs -o subvol=@,$o_btrfs LABEL=system /mnt
-mkdir -p /mnt/{home,srv,var/{log,cache/pacman/pkg},tmp}
+mount -t btrfs -o subvol=@,$o_btrfs LABEL=arch /mnt
+mount -t btrfs -o subvol=@home,$o_btrfs LABEL=arch /mnt/home
+mount -t btrfs -o subvol=@snapshots,$o_btrfs LABEL=arch /mnt/.snapshots
 
-mount -t btrfs -o subvol=@home,$o_btrfs LABEL=system /mnt/home
-mount -t btrfs -o subvol=@log,$o_btrfs LABEL=system /mnt/var/log
-mount -t btrfs -o subvol=@pkg,$o_btrfs LABEL=system /mnt/var/cache/pacman/pkg
-mount -t btrfs -o subvol=@srv,$o_btrfs LABEL=system /mnt/srv
-mount -t btrfs -o subvol=@tmp,$o_btrfs LABEL=system /mnt/tmp
-mount -t btrfs -o subvol=@snapshots,$o_btrfs LABEL=system /mnt/.snapshots
+mkdir -p /mnt/var/cache/pacman/pkg
+btrfs subvolume create /mnt/var/cache/pacman/pkg
+
+mkdir -p /var/abs
+btrfs subvolume create /var/abs
+
+mkdir -p /var/tmp
+btrfs subvolume create /var/tmp
+
+mkdir -p /srv
+btrfs subvolume create /srv
 
 mkdir /mnt/boot
 mount LABEL=EFI /mnt/boot
@@ -116,9 +118,12 @@ pacstrap /mnt base base-devel \
                     zathura \
                     zathura-pdf-poppler
 
+# UUID based
+genfstab -U /mnt >> /mnt/etc/fstab
 
+# Labels
+# genfstab -L -p /mnt >> /mnt/etc/fstab
 
-genfstab -L -p /mnt >> /mnt/etc/fstab
 curl -Lo /mnt/install.sh https://raw.githubusercontent.com/Arunscape/arch-install-config/master/install-scripts/02-chroot.sh
 chmod +x /mnt/install.sh
 arch-chroot /mnt bash install.sh $USERNAME $DRIVE $CPU $GPU $WIFI

@@ -36,7 +36,7 @@ EOF
 
 diskuuid=$(blkid -s UUID -o value /dev/disk/by-partlabel/cryptsystem)
 partuuid=$(blkid -s PARTUUID -o value /dev/disk/by-partlabel/cryptsystem)
-cat > boot/loader/entries/arch.conf << EOF
+cat > /boot/loader/entries/arch.conf << EOF
 title   Arch Linux
 linux   /vmlinuz-linux
 initrd  /$CPU-ucode.img
@@ -44,7 +44,7 @@ initrd  /initramfs-linux.img
 options root=UUID=$diskuuid rd.luks.name=$partuuid=cryptsystem rw rootflags=subvol=@
 EOF
 
-cat > boot/loader/entries/arch-lts.conf << EOF
+cat > /boot/loader/entries/arch-lts.conf << EOF
 title   Arch Linux LTS
 linux   /vmlinuz-linux-lts
 initrd  /$CPU-ucode.img
@@ -104,6 +104,7 @@ EOF
 else
     :
 fi
+mkinitcpio -P
 
 # install yay
 cd /tmp

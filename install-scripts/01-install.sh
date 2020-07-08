@@ -27,12 +27,12 @@ WIFI='y'
 GPU='intel'
 
 set -e 
-
+setfont sun12x22
 lsblk
 read -p "$(tput bold)$(tput setaf 1)WARNING this will wipe $DRIVE Press ENTER to continue, or Ctrl+C to exit$(tput sgr 0)"
 
 sgdisk --zap-all $DRIVE
-partprobe
+partprobe $DRIVE
 
 sgdisk --clear \
         --new=1:0:+512MiB --typecode=1:ef00 --change-name=1:EFI \

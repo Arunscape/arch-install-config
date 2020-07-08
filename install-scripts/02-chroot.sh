@@ -57,7 +57,7 @@ title   Arch Linux Zen
 linux   /vmlinuz-linux-zen
 initrd  /$CPU-ucode.img
 initrd  /initramfs-linux-zen.img
-options root=UUID=$diskuuid rd.luks.name=$partuuid=cryptsystem rw rootflags=subvol=@
+options root=UUID=$partuuid rd.luks.name=$diskuuid=cryptsystem rw rootflags=subvol=@
 EOF
 
 bootctl install --path=/boot
@@ -114,13 +114,13 @@ cd /tmp
 git clone https://aur.archlinux.org/yay.git
 chown -R nobody yay
 cd yay
-sudo -u nobody makepkg --noconfirm -si
+sudo su nobody makepkg --noconfirm -si
 
 clone_configs(){
     cd /home/$USERNAME
-    sudo -u $USERNAME git clone https://github.com/Arunscape/dotfiles.git
+    sudo su $USERNAME git clone https://github.com/Arunscape/dotfiles.git
     cd dotfiles
-    sudo -u $USERNAME git remote set-url origin git@github.com:Arunscape/dotfiles.git
+    sudo su $USERNAME git remote set-url origin git@github.com:Arunscape/dotfiles.git
 }
 
 

@@ -57,7 +57,7 @@ title   Arch Linux Zen
 linux   /vmlinuz-linux-zen
 initrd  /$CPU-ucode.img
 initrd  /initramfs-linux-zen.img
-options root=UUID=$partuuid rd.luks.name=$diskuuid=cryptroot rw rootflags=subvol=@
+options root=/dev/mapper/cryptroot rd.luks.name=$diskuuid=cryptroot rw rootflags=subvol=@
 EOF
 
 bootctl install --path=/boot

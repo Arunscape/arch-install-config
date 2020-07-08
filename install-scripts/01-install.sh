@@ -79,7 +79,7 @@ mount -t btrfs -o subvol=@tmp,$o_btrfs LABEL=system /mnt/tmp
 mount -t btrfs -o subvol=@snapshots,$o_btrfs LABEL=system /mnt/.snapshots
 
 mkdir /mnt/boot
-mount LABEL=EFI /boot
+mount LABEL=EFI /mnt/boot
 
 sed -i "s/^#Color/Color/" /etc/pacman.conf
 sed -i "/^Color/a ILoveCandy" /etc/pacman.conf

@@ -134,7 +134,7 @@ else
     git clone https://github.com/Arunscape/dotfiles.git
     cd dotfiles
     git remote set-url origin git@github.com:Arunscape/dotfiles.git
-    sudo -u $USERNAME bash installapps.sh
+    sudo -u $USERNAME bash -c "bash installapps.sh"
     HOME=/home/$USERNAME bash symlinks.sh
 fi
 

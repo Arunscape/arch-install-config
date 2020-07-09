@@ -85,6 +85,7 @@ mount LABEL=EFI /mnt/boot
 sed -i "s/^#Color/Color/" /etc/pacman.conf
 sed -i "/^Color/a ILoveCandy" /etc/pacman.conf
 
+
 pacman -Syy
 pacstrap /mnt base base-devel \
                     btrfs-progs \
@@ -103,13 +104,24 @@ pacstrap /mnt base base-devel \
 
 # UUID based
 genfstab -U /mnt >> /mnt/etc/fstab
-
 # Labels
 # genfstab -L -p /mnt >> /mnt/etc/fstab
 
+echo $HOST_NAME > /mnt/etc/hostname
+ln -sf /mnt/usr/share/zoneinfo/$TIMEZONE /mnt/etc/localtime
+sed -i '/en_CA/ s/^#//' /mnt/etc/locale.gen
+sed -i '/en_US/ s/^#//' /mnt/etc/locale.gen
+echo LANG=en_CA.UTF-8 >> /mnt/etc/locale.conf
+echo LANG=en_US.UTF-8 >> /mnt/etc/locale.conf
+echo KEYMAP=us >> /mnt/etc/vconsole.conf
+sed -i '/%wheel ALL=(ALL) ALL/ s/^# //' /mnt/etc/sudoers
+sed -i "s/^#Color/Color/" /mnt/etc/pacman.conf
+sed -i "/^Color/a ILoveCandy" /mnt/etc/pacman.conf
+
+
 curl -Lo /mnt/install.sh https://raw.githubusercontent.com/Arunscape/arch-install-config/master/install-scripts/02-chroot.sh
 chmod +x /mnt/install.sh
-arch-chroot /mnt bash install.sh $USERNAME $DRIVE $CPU $GPU $WIFI $DOTFILES $LAPTOP $HOST_NAME
+arch-chroot /mnt bash install.sh $USERNAME $DRIVE $CPU $GPU $WIFI $DOTFILES $LAPTOP
 
 # exit and reboot
 rm /mnt/install.sh

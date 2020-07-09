@@ -12,16 +12,7 @@ set -e
 # NTP synchronization
 # but systemctl doesn't work in chroot
 # timedatectl set-ntp 1
-ln -sf /usr/share/zoneinfo/$TIMEZONE /etc/localtime
-echo $HOST_NAME > /etc/hostname
-sed -i '/en_CA/ s/^#//' /etc/locale.gen
-sed -i '/en_US/ s/^#//' /etc/locale.gen
-echo LANG=en_CA.UTF-8 >> /etc/locale.conf
-echo LANG=en_US.UTF-8 >> /etc/locale.conf
-echo KEYMAP=us >> /etc/vconsole.conf
-sed -i '/%wheel ALL=(ALL) ALL/ s/^# //' /etc/sudoers
-sed -i "s/^#Color/Color/" /etc/pacman.conf
-sed -i "/^Color/a ILoveCandy" /etc/pacman.conf
+
 
 hwclock --systohc --utc
 locale-gen
@@ -190,7 +181,7 @@ else
     git clone https://github.com/Arunscape/dotfiles.git
     cd dotfiles
     git remote set-url origin git@github.com:Arunscape/dotfiles.git
-    sudo -u $USERNAME bash -c "bash installapps.sh"
+    sudo -u $USERNAME bash installapps.sh
     HOME=/home/$USERNAME bash symlinks.sh
 fi
 

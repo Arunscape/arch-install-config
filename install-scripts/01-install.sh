@@ -43,6 +43,7 @@ sgdisk --clear \
         $DRIVE
 
 partprobe $DRIVE
+sleep 1 # surely there's a better way
 mkfs.fat -F32 -n EFI /dev/disk/by-partlabel/EFI
 
 cryptsetup luksFormat \

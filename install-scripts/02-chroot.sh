@@ -6,6 +6,7 @@ GPU=$4
 WIFI=$5
 DOTFILES=$6
 LAPTOP=$7
+HOST_NAME=$8
 
 set -e
 # NTP synchronization

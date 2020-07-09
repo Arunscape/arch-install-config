@@ -151,6 +151,8 @@ else
     libinput-gestures-setup autostart
 
     ln -sf /home/$USERNAME/dotfiles/.config/libinput-gestures.conf /home/$USERNAME/.config/libinput-gestures.conf
+    usermod -aG video $USERNAME
+    usermod -aG input $USERNAME
 fi
 
 exit

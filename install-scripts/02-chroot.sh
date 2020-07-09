@@ -177,7 +177,7 @@ git clone https://aur.archlinux.org/yay.git
 chown -R $USERNAME yay
 cd yay
 
-echo "$(tput bold)$(tput setaf 1)Time to set your passwd(tput sgr 0)"
+echo "$(tput bold)$(tput setaf 1)Time to set your passwd$(tput sgr 0)"
 passwd $USERNAME
 sudo -u $USERNAME makepkg --noconfirm -si
 

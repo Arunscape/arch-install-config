@@ -123,6 +123,7 @@ EOF
 
     echo 'PreferredTechnologies=ethernet,wifi' >> /etc/connman/main.conf
 
+    mkdir -p /var/lib/connman
     cat > /var/lib/connman/eduroam.config << EOF
 [service_eduroam]
 Type=wifi

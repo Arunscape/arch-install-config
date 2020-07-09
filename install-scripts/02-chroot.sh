@@ -134,7 +134,7 @@ else
     git clone https://github.com/Arunscape/dotfiles.git
     cd dotfiles
     git remote set-url origin git@github.com:Arunscape/dotfiles.git
-    bash installapps.sh
+    sudo -u $USERNAME bash installapps.sh
     HOME=/home/$USERNAME bash symlinks.sh
 fi
 
@@ -143,7 +143,7 @@ if [ -z "$LAPTOP" ]
 then
     :
 else
-    yay -S --noconfirm --needed \
+    sudo -u $USERNAME yay -S --noconfirm --needed \
     brillo \
     libinput-gestures
 

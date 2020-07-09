@@ -120,10 +120,11 @@ mkinitcpio -P
 # install yay
 cd /tmp
 git clone https://aur.archlinux.org/yay.git
-chown -R nobody yay
+chown -R $USERNAME yay
 cd yay
-sudo su - $USERNAME
-makepkg --noconfirm -si
+
+passwd $USERNAME
+sudo -u $USERNAME makepkg --noconfirm -si
 
 if [ -z "$DOTFILES" ]
 then
@@ -134,7 +135,7 @@ else
     cd dotfiles
     git remote set-url origin git@github.com:Arunscape/dotfiles.git
     bash installapps.sh
-    bash symlinks.sh
+    HOME=/home/$USERNAME bash symlinks.sh
 fi
 
 
@@ -146,12 +147,10 @@ else
     brillo \
     libinput-gestures
 
-    sudo gpasswd -a $USERNAME input
+    gpasswd -a $USERNAME input
     libinput-gestures-setup autostart
 
-    ln -sf ~/dotfiles/.config/libinput-gestures.conf ~/.config/libinput-gestures.conf
+    ln -sf /home/$USERNAME/dotfiles/.config/libinput-gestures.conf /home/$USERNAME/.config/libinput-gestures.conf
 fi
 
-echo "Finally, enter password for $USERNAME or you won't be able to login!"
-passwd $USERNAME
 exit

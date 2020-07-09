@@ -30,7 +30,7 @@ usermod -p '!' root
 mkdir -p /boot/loader/entries/
     
 cat > /boot/loader/loader.conf << EOF
-default arch-zen
+default arch-zen.conf
 timeout 1
 editor no
 auto-entries 0

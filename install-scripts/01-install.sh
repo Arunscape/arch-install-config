@@ -113,7 +113,6 @@ arch-chroot /mnt bash install.sh $USERNAME $DRIVE $CPU $GPU $WIFI $DOTFILES $LAP
 
 # exit and reboot
 rm /mnt/install.sh
-# umount -R /mnt
+umount -R /mnt
 echo "$(tput bold)$(tput setaf 2)Done!!!$(tput sgr 0)"
-echo remember to umount -R /mnt
-# reboot
+reboot

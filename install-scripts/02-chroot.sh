@@ -123,6 +123,7 @@ git clone https://aur.archlinux.org/yay.git
 chown -R $USERNAME yay
 cd yay
 
+"$(tput bold)$(tput setaf 1)Time to set your passwd(tput sgr 0)"
 passwd $USERNAME
 sudo -u $USERNAME makepkg --noconfirm -si
 
@@ -148,11 +149,10 @@ else
     libinput-gestures
 
     gpasswd -a $USERNAME input
+    gpasswd -a $USERNAME video
     libinput-gestures-setup autostart
 
     ln -sf /home/$USERNAME/dotfiles/.config/libinput-gestures.conf /home/$USERNAME/.config/libinput-gestures.conf
-    usermod -aG video $USERNAME
-    usermod -aG input $USERNAME
 fi
 
 exit

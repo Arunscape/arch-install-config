@@ -20,11 +20,14 @@ CPU='intel'
 
 # anything for yes, empty for no
 WIFI='y'
+DOTFILES='y'
+LAPTOP='y'
 
 # amd
 # nvidia
 # intel 
 GPU='intel'
+
 
 set -e 
 setfont sun12x22
@@ -95,22 +98,7 @@ pacstrap /mnt base base-devel \
                     openssh \
                     git \
                     neovim \
-                    fish \
-                    dash \
-                    sway \
-                    kitty \
-                    grim \
-                    slurp \
-                    p7zip \
-                    noto-fonts \
-                    ttf-fira-code \
-                    firefox-developer-edition \
-                    vlc \
-                    thefuck \
-                    lsd \
-                    sl \
-                    zathura \
-                    zathura-pdf-poppler
+                    fish
 
 # UUID based
 genfstab -U /mnt >> /mnt/etc/fstab
@@ -120,7 +108,7 @@ genfstab -U /mnt >> /mnt/etc/fstab
 
 curl -Lo /mnt/install.sh https://raw.githubusercontent.com/Arunscape/arch-install-config/master/install-scripts/02-chroot.sh
 chmod +x /mnt/install.sh
-arch-chroot /mnt bash install.sh $USERNAME $DRIVE $CPU $GPU $WIFI
+arch-chroot /mnt bash install.sh $USERNAME $DRIVE $CPU $GPU $WIFI $DOTFILES $LAPTOP
 
 # exit and reboot
 rm /mnt/install.sh

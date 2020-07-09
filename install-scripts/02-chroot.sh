@@ -4,6 +4,8 @@ DRIVE=$2
 CPU=$3
 GPU=$4
 WIFI=$5
+DOTFILES=$6
+LAPTOP=$7
 
 set -e
 # NTP synchronization
@@ -41,7 +43,7 @@ title   Arch Linux
 linux   /vmlinuz-linux
 initrd  /$CPU-ucode.img
 initrd  /initramfs-linux.img
-options root=UUID=$partuuid rd.luks.name=$diskuuid=cryptroot rw rootflags=subvol=@
+options root=/dev/mapper/cryptroot rd.luks.name=$diskuuid=cryptroot rw rootflags=subvol=@
 EOF
 
 cat > /boot/loader/entries/arch-lts.conf << EOF
@@ -49,7 +51,7 @@ title   Arch Linux LTS
 linux   /vmlinuz-linux-lts
 initrd  /$CPU-ucode.img
 initrd  /initramfs-linux-lts.img
-options root=UUID=$partuuid rd.luks.name=$diskuuid=cryptroot rw rootflags=subvol=@
+options root=/dev/mapper/cryptroot rd.luks.name=$diskuuid=cryptroot rw rootflags=subvol=@
 EOF
 
 cat > boot/loader/entries/arch-zen.conf << EOF
@@ -104,7 +106,13 @@ COMPRESSION="lz4"
 EOF
 
 else
-    echo gpu is $GPU
+    cat > /etc/mkinitcpio.conf << EOF
+MODULES=()
+BINARIES=(/usr/bin/btrfs)
+FILES=""
+HOOKS=(base systemd autodetect keyboard sd-vconsole modconf block sd-encrypt filesystems btrfs fsck)
+COMPRESSION="lz4"
+EOF
 fi
 
 mkinitcpio -P
@@ -114,19 +122,36 @@ cd /tmp
 git clone https://aur.archlinux.org/yay.git
 chown -R nobody yay
 cd yay
-sudo su - nobody makepkg --noconfirm -si
+sudo su - $USERNAME
+makepkg --noconfirm -si
 
-clone_configs(){
+if [ -z "$DOTFILES" ]
+then
+    :
+else
     cd /home/$USERNAME
-    sudo su - $USERNAME git clone https://github.com/Arunscape/dotfiles.git
+    git clone https://github.com/Arunscape/dotfiles.git
     cd dotfiles
-    sudo su - $USERNAME git remote set-url origin git@github.com:Arunscape/dotfiles.git
-}
+    git remote set-url origin git@github.com:Arunscape/dotfiles.git
+    bash installapps.sh
+    bash symlinks.sh
+fi
 
 
+if [ -z "$LAPTOP" ]
+then
+    :
+else
+    yay -S --noconfirm --needed \
+    brillo \
+    libinput-gestures
 
-# uncomment to skip cloning dotfiles
-clone_configs
-echo "Enter password for $USERNAME"
+    sudo gpasswd -a $USERNAME input
+    libinput-gestures-setup autostart
+
+    ln -sf ~/dotfiles/.config/libinput-gestures.conf ~/.config/libinput-gestures.conf
+fi
+
+echo "Finally, enter password for $USERNAME or you won't be able to login!"
 passwd $USERNAME
 exit

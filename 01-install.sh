@@ -119,7 +119,7 @@ sed -i "s/^#Color/Color/" /mnt/etc/pacman.conf
 sed -i "/^Color/a ILoveCandy" /mnt/etc/pacman.conf
 
 
-curl -Lo /mnt/install.sh https://raw.githubusercontent.com/Arunscape/arch-install-config/master/install-scripts/02-chroot.sh
+curl -Lo /mnt/install.sh https://raw.githubusercontent.com/Arunscape/arch-install-config/master/02-chroot.sh
 chmod +x /mnt/install.sh
 arch-chroot /mnt bash install.sh $USERNAME $DRIVE $CPU $GPU $WIFI $DOTFILES $LAPTOP
 

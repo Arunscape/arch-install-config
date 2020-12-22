@@ -178,11 +178,13 @@ then
     :
 else
     cd /home/$USERNAME
-    git clone https://github.com/Arunscape/dotfiles.git
+    git clone --recurse-submodules https://github.com/Arunscape/dotfiles.git
     cd dotfiles
     git remote set-url origin git@github.com:Arunscape/dotfiles.git
     sudo -u $USERNAME bash installapps.sh
     HOME=/home/$USERNAME bash symlinks.sh
+    chown -R $USERNAME dotfiles
+
 fi
 
 

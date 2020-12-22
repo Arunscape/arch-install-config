@@ -102,7 +102,8 @@ pacstrap /mnt base base-devel \
                     openssh \
                     git \
                     neovim \
-                    fish
+                    fish \
+                    dhcpcd
 
 # UUID based
 genfstab -U /mnt >> /mnt/etc/fstab

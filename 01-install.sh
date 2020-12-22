@@ -85,6 +85,8 @@ mount LABEL=EFI /mnt/boot
 sed -i "s/^#Color/Color/" /etc/pacman.conf
 sed -i "/^Color/a ILoveCandy" /etc/pacman.conf
 
+echo 'Server = https://cloudflaremirrors.com/archlinux/$repo/os/$arch' | cat - /etc/pacman.d/mirrorlist > tmp && mv tmp /etc/pacman.d/mirrorlist
+
 
 pacman -Syy
 pacstrap /mnt base base-devel \
@@ -117,7 +119,6 @@ echo KEYMAP=us >> /mnt/etc/vconsole.conf
 sed -i '/%wheel ALL=(ALL) ALL/ s/^# //' /mnt/etc/sudoers
 sed -i "s/^#Color/Color/" /mnt/etc/pacman.conf
 sed -i "/^Color/a ILoveCandy" /mnt/etc/pacman.conf
-
 
 curl -Lo /mnt/install.sh https://raw.githubusercontent.com/Arunscape/arch-install-config/master/02-chroot.sh
 chmod +x /mnt/install.sh

@@ -2,9 +2,9 @@
 # Edit these variables or leave them blank to be prompted during setup
 
 # install arch to this drive ex: /dev/sda or /dev/sdb... etc
-DRIVE='/dev/sda'
+DRIVE='/dev/nvme0n1'
 
-HOST_NAME='Arun-Predator-Linux'
+HOST_NAME='Arun-Laptop'
 
 # has to be all lowercase
 USERNAME='arunscape'
@@ -16,17 +16,17 @@ TIMEZONE='Canada/Mountain'
 
 # amd
 # intel
-CPU='intel'
+CPU='amd'
 
 # anything for yes, empty for no
 WIFI='y'
-DOTFILES='y'
+DOTFILES=''
 LAPTOP='y'
 
 # amd
 # nvidia
 # intel 
-GPU='intel'
+GPU='amd'
 
 
 set -e 

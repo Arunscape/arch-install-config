@@ -72,64 +72,8 @@ then
     :
 else
     pacman -S --noconfirm --needed \
-    iwd \
-    connman
-
-    cat > /etc/systemd/system/iwd.service << EOF
-[Unit]
-Description=Internet Wireless Daemon (IWD)
-Before=network.target
-Wants=network.target
-
-[Service]
-ExecStart=/usr/lib/iwd/iwd
-
-[Install]
-Alias=multi-user.target.wants/iwd.service
-EOF
-
-    cat > /etc/systemd/system/connman_iwd.service << EOF
-[Unit]
-Description=Connection service
-DefaultDependencies=false
-Conflicts=shutdown.target
-RequiresMountsFor=/var/lib/connman
-After=dbus.service network-pre.target systemd-sysusers.service iwd.service
-Before=network.target multi-user.target shutdown.target
-Wants=network.target
-Requires=iwd.service
-
-[Service]
-Type=dbus
-BusName=net.connman
-Restart=on-failure
-ExecStart=/usr/bin/connmand --wifi=iwd_agent -n 
-StandardOutput=null
-CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE CAP_NET_RAW CAP_SYS_TIME CAP_SYS_MODULE
-ProtectHome=true
-ProtectSystem=true
-
-[Install]
-WantedBy=multi-user.target
-EOF
-
-    echo 'PreferredTechnologies=ethernet,wifi' >> /etc/connman/main.conf
-
-    mkdir -p /var/lib/connman
-    cat > /var/lib/connman/eduroam.config << EOF
-[service_eduroam]
-Type=wifi
-Name=eduroam
-EAP=peap
-CACertFile=/etc/ssl/certs/GlobalSign_Root_CA.pem
-Phase2=MSCHAPV2
-Identity=user@foo.edu
-AnonymousIdentity=
-Passphrase=password
-EOF
-
+    iwd
 fi
-
 # early KMS
 if [ "$GPU" == "intel" ]
 then
@@ -165,26 +109,22 @@ mkinitcpio -P
 
 # install yay
 cd /tmp
-git clone https://aur.archlinux.org/yay.git
-chown -R $USERNAME yay
-cd yay
+git clone https://aur.archlinux.org/paru.git
+chown -R $USERNAME paru
+cd paru
 
 echo "$(tput bold)$(tput setaf 1)Time to set your passwd$(tput sgr 0)"
 passwd $USERNAME
-sudo -u $USERNAME makepkg --noconfirm -si
+sudo -u $USERNAME makepkg -si
 
 if [ -z "$DOTFILES" ]
 then
     :
 else
     cd /home/$USERNAME
-    git clone --recurse-submodules https://github.com/Arunscape/dotfiles.git
+    sudo -u $USERNAME git clone --recurse-submodules https://github.com/Arunscape/dotfiles.git
     cd dotfiles
     git remote set-url origin git@github.com:Arunscape/dotfiles.git
-    sudo -u $USERNAME bash installapps.sh
-    HOME=/home/$USERNAME bash symlinks.sh
-    chown -R $USERNAME dotfiles
-
 fi
 
 
@@ -192,13 +132,12 @@ if [ -z "$LAPTOP" ]
 then
     :
 else
-    sudo -u $USERNAME yay -S --noconfirm --needed \
+    sudo -u $USERNAME paru -S --needed \
     brillo \
     libinput-gestures
 
     gpasswd -a $USERNAME input
     gpasswd -a $USERNAME video
-    libinput-gestures-setup autostart
 
     ln -sf /home/$USERNAME/dotfiles/.config/libinput-gestures.conf /home/$USERNAME/.config/libinput-gestures.conf
 fi
